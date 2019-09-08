@@ -1,0 +1,41 @@
+{
+  "client_info": {
+    "msal_info": {
+      "clientID": "6be90a50-0b8d-4303-8716-ce6e448d764d",
+      "authority": "https://login.microsoftonline.com/smartegrity.onmicrosoft.com/",
+      "redirectUri": "https://localhost:8084/",
+      "postLogoutRedirectUri": "https://localhost:8084/logout",
+      "consentScopes": "api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user",
+      "reqScopes": "api://6be90a50-0b8d-4303-8716-ce6e448d764d/default"
+    },
+    "storeInfo": {
+      "tokenKey": "smart_website_token",
+      "username": "smart_website_username",
+      "exptime": "smart_website_expire_time",
+      "settingKey":"smart_website_user_setting"
+    },
+    "apiEndPoints": {
+      "graphProfileAPI": "https://graph.microsoft.com/v1.0/me",
+      "serverBaseURL": "https://localhost:8084/api"
+    },
+    "substationAppInfo" :{
+      "url":"https://localhost:8081/app/explorer"
+    },
+    "languages" :[
+      {"id": "hg", "name": "Magyar"},
+      {"id": "en", "name": "English"}
+    ],
+    "cookie": {
+      "domain" : "localhost",
+      "link": "https://localhost:8084/app/privacy-policy"
+    }
+  },
+  "server_info":{
+    "port": 8084,
+    "online_mode":true,
+    "apiBaseURL":"https://192.168.117.128:8079/substation/v1",
+    "pfx":"localhost.pfx",
+    "pfx_passphrase" : "1234"
+  }
+}
+

@@ -1,0 +1,109 @@
+<app-page-loading *ngIf="!contentLoaded"></app-page-loading>
+<div id="events-table-container">
+    <div id="{{tableId}}">
+        <button type="button" id="tbl-sel-btn" (click)="onForceRowSelect()" style="display: none">Rendering</button>
+        <div class="ev-date-range-control">
+            <div class="form-group my-inline-form-group">
+                <label class="my-inline-form-label">From : </label>
+                <input placeholder="Date Time:"  [ngClass] = "{'ev-error':fromDate>toDate}"
+                       class="form-control my-inline-form-control"
+                       [(ngModel)]="fromDate" (ngModelChange)="onChangeFromDate($event)"
+                       [owlDateTimeTrigger]="fromdt" [owlDateTime]="fromdt">
+                <owl-date-time #fromdt></owl-date-time>
+            </div>
+            <div class="form-group my-inline-form-group">
+                <label class="my-inline-form-label">To : </label>
+                <input placeholder="Date Time:"
+                       class="form-control my-inline-form-control"
+                       [(ngModel)]="toDate" (ngModelChange)="onChangeToDate($event)"
+                       [owlDateTimeTrigger]="todt" [owlDateTime]="todt">
+                <owl-date-time #todt></owl-date-time>
+            </div>
+            <div class="form-group my-inline-form-group">
+                <button type="button" class="btn btn-primary" (click)="getSbEvents()">Search</button>
+            </div>
+            <div class="form-group my-inline-form-group">
+                <button type="button" class="btn btn-info" (click)="onResetTime()">Reset</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="table-setting-bar">
+                    <div class="dropdown mg-dropdown-area" >
+                        <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                        <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                                pTooltip="Column Setting"  tooltipPosition="top"
+                                (click)="isShowSetting = !isShowSetting">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                            <div style="text-align:left">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Visible</th>
+                                        <th>Column</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let eventcol of eventsCols">
+                                        <td>
+                                            <p-checkbox binary="true" value="true" [disabled]="eventcol.visibility && curSelColsCnt == 1"
+                                                        (onChange)="onChangeVisibility(eventcol)"
+                                                        [(ngModel)]="eventcol.visibility">
+                                            </p-checkbox>
+                                        </td>
+                                        <td>{{eventcol.header}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn filter-items" (click)="onChangeFilter()"
+                            pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                            [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                        <i class="fa fa-filter"></i>
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+                <p-table #dt sortMode="multiple"
+                         [value]="events"
+                         [paginator]="true" [rows]="10"
+                         [totalRecords]="events.length"
+                         [(selection)]="selectedRow"
+                         selectionMode="single"
+                         (onRowSelect)="onSelectRow($event)"
+                         (onRowUnselect)="onDeselectRow($event)">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="th-id-wrap" *ngFor="let eventcol of eventsCols"
+                                [ngClass]="{'mg-hide': !eventcol.visibility}"
+                                [pSortableColumn]="eventcol.field">
+                                {{eventcol.header}}
+                                <p-sortIcon [field]="eventcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                            </th>
+                        </tr>
+                        <tr [ngClass]="{'mg-hide':isHideFilter}">
+                            <th *ngFor="let eventcol of eventsCols"
+                                [ngClass]="{'mg-hide':!eventcol.visibility}"
+                                [ngSwitch]="eventcol.field">
+                                <input *ngSwitchCase="eventcol.field" pInputText type="text"
+                                       (input)="dt.filter($event.target.value, eventcol.field, eventcol.filterMatchMode)">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-eventdata>
+                        <tr [pSelectableRow]="eventdata">
+                            <td *ngFor="let eventcol of eventsCols"
+                                [ngClass]="{'mg-hide':!eventcol.visibility}">
+                                {{eventdata[eventcol.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

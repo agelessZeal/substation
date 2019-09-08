@@ -1,0 +1,17 @@
+#events-table-container {
+    position: relative;
+    /*overflow: auto;*/
+    height: 100%;
+    padding-bottom: 5px;
+}
+th input[type='text'],
+th input[type='number'] {
+    width: 100%;
+}
+.th-id-wrap:first-child{
+    width: 70px;
+}
+#events-table-container>div {
+    height: 100%;
+    overflow: auto;
+}

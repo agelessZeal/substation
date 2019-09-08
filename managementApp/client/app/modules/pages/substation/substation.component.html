@@ -1,0 +1,22 @@
+<div class="substations-container" >
+    <div class="mg-app-component"><div class="mg-width-virtual"></div></div>
+    <app-substation-table></app-substation-table>
+    <app-substation-form *ngIf="subFormSt"></app-substation-form>
+    <app-bay-table *ngIf="bayListSt"></app-bay-table>
+    <app-bay-form *ngIf="bayFormSt"></app-bay-form>
+    <app-device-table *ngIf="devListSt"></app-device-table>
+    <app-device-form *ngIf="devFormSt"></app-device-form>
+    <app-device-measurement-table *ngIf="devMsListSt"></app-device-measurement-table>
+    <app-device-measurement-form *ngIf="devMsFormSt"></app-device-measurement-form>
+    <app-device-metering-table *ngIf="devMtListSt"></app-device-metering-table>
+    <div><div class="mg-width-virtual"></div></div>
+    <div class="mg-breadcrumb" *ngIf="subFormSt && (subName != '')">
+        <div class="mg-bd-item" *ngIf="subFormSt && (subName != '')" (click)="showSubstationDetails()"> > Substation [{{subName}}]</div>
+        <div class="mg-bd-item" *ngIf="bayFormSt && (bayName != '')" (click)="showBayDetails()"> > Bay [{{bayName}}]</div>
+        <div class="mg-bd-item" *ngIf="devFormSt && (devName != '')" (click)="showDeviceDetails()"> > Device [{{devName}}]</div>
+    </div>
+</div>
+
+
+
+

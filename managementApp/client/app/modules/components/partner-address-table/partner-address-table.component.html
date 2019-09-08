@@ -1,0 +1,85 @@
+<div class="partner-address-list mg-app-component" *ngIf="isEnabled" id="{{tableId}}">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <h4>Addresses</h4>
+        <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-setting-bar">
+        <div class="dropdown mg-dropdown-area" >
+          <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+          <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                  pTooltip="Column Setting"  tooltipPosition="top"
+                  (click)="isShowSetting = !isShowSetting">
+            <i class="fa fa-cog"></i>
+          </button>
+          <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+            <div style="text-align:left">
+              <table>
+                <thead>
+                <tr>
+                  <th>Visible</th>
+                  <th>Column</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let addresscol of addressCols">
+                  <td><p-checkbox binary="true" value="true" [disabled]="addresscol.visibility && curSelColsCnt == 1"
+                                  (onChange)="onChangeVisibility(addresscol)"
+                                  [(ngModel)]="addresscol.visibility">
+                  </p-checkbox></td>
+                  <td>{{addresscol.header}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <button class="btn filter-items" (click)="onChangeFilter()"
+                pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+          <i class="fa fa-filter"></i>
+        </button>
+        <div class="clearfix"></div>
+      </div>
+      <p-table #dt sortMode="multiple"
+               [value]="addresses"
+               [paginator]="true" [rows]="10"
+               [totalRecords]="addresses.length"
+               selectionMode="multiple"
+               [resizableColumns]="true"
+               columnResizeMode="expand"
+               (onColResize) = "onColResize($event)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="th-id-wrap"
+                *ngFor="let addresscol of addressCols"
+                [ngClass]="{'mg-hide': !addresscol.visibility}"
+                [pSortableColumn]="addresscol.field" pResizableColumn>
+              {{addresscol.header}}
+              <p-sortIcon [field]="addresscol.field" ariaLabel="Activate to sort"></p-sortIcon>
+            </th>
+          </tr>
+          <tr [ngClass]="{'mg-hide':isHideFilter}">
+            <th *ngFor="let addresscol of addressCols"
+                [ngClass]="{'mg-hide':!addresscol.visibility}"
+                [ngSwitch]="addresscol.field" >
+              <input *ngSwitchCase="addresscol.field" pInputText type="text"
+                     (input)="onTblFilter($event, addresscol, dt)">
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-address>
+          <tr>
+            <td *ngFor="let addressrole of addressCols"
+                [ngClass]="{'mg-hide':!addressrole.visibility}">
+              {{address[addressrole.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

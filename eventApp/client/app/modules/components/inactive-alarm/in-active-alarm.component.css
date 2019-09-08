@@ -1,0 +1,45 @@
+.alarm-list {
+    position: relative;
+}
+.row-edit-btn {
+    color: #007bff !important;
+    cursor: pointer !important;
+}
+.row-edit-btn:hover{
+    text-decoration: underline !important;
+}
+.ev-table-wrapper {
+    position: relative;
+}
+.th-id-wrap:first-child{
+    width: 70px;
+}
+th input[type='text'],
+th input[type='number'] {
+    width: 100%;
+}
+
+th:nth-child(8) {
+    width: 115px;
+}
+th:nth-child(5) {
+    width: 100px;
+}
+.alarm-detail-form {
+    margin-bottom: 0;
+}
+.alarm-detail-form p>span {
+    font-weight: bold;
+}
+.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+    font-size: 1.15em;
+}
+.ev-severity-btn {
+    padding: 2px 10px;
+    color: white;
+    border-radius: 3px;
+}
+
+.ev-add-action-btn {
+    margin-top: 10px;
+}

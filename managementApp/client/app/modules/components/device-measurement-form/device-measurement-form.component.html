@@ -1,0 +1,100 @@
+<div class="dev-ms-form mg-op-form mg-app-component" *ngIf="isEnabled" id="dev-ms-form">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h4>Measurement Details</h4>
+                <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    <button type="button" class="btn btn-primary op-btn-save" (click)="onSaveFormData()"
+                            [disabled]="!isFormChanged">{{ (formMode)?'Add':'Save' }}
+                    </button>
+                </div>
+            </div>
+            <div class="form-content-wrap">
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Measurement</h5>
+                    </div>
+                    <div class="ui-g-9">
+                        <p>Id : {{selectedMsTypeRow.id}}</p>
+                        <p>Name : {{selectedMsTypeRow.name}}</p>
+                        <p>Description : {{selectedMsTypeRow.description}}</p>
+                        <p>Unit : {{selectedMsTypeRow.unit}}</p>
+                        <p>Multiplier : {{selectedMsTypeRow.multiplier}}</p>
+                        <p>Format : {{selectedMsTypeRow.format}}</p>
+                        <p>Aggregation : {{selectedMsTypeRow.aggregation}}</p>
+                    </div>
+                    <div class="ui-g-3">
+                        <button type="button" class="form-control btn btn-info" (click)="onShowMsTypesDialog()">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label for="name">Iec61850Path</label>
+                            <input type="text" class="form-control" (ngModelChange)="iec61850pathChange($event)"
+                                   [ngClass]="{'mg-error':(iec61850path.trim().length == 0)}"
+                                   [ngModel]="iec61850path" id="name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-dialog header="Measurements" #dialog [width]="1000"
+              [(visible)]="displayMsTypesModal" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-g">
+            <button class="btn filter-items" (click)="onChangeFilter()"
+                    pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                    [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                <i class="fa fa-filter"></i>
+            </button>
+        </div>
+        <div class="ui-g">
+            <p-table #dt sortMode="multiple"
+                     [value]="measurements"
+                     [paginator]="true" [rows]="5"
+                     [totalRecords]="measurements.length"
+                     [(selection)]="selectedMsTypeRow"
+                     selectionMode="single"
+                     (onHeaderCheckboxToggle)="selectAllRows($event)"
+                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let measurementcol of measurementCols"
+                            [pSortableColumn]="measurementcol.field">
+                            {{measurementcol.header}}
+                            <p-sortIcon [field]="measurementcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                        </th>
+                    </tr>
+                    <tr [ngClass]="{'mg-hide':isHideFilter}">
+                        <th *ngFor="let measurementcol of measurementCols" [ngSwitch]="measurementcol.field">
+                            <input *ngSwitchCase="measurementcol.field" pInputText type="text"
+                                   (input)="dt.filter($event.target.value, measurementcol.field, measurementcol.filterMatchMode)">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-measurement>
+                    <tr [pSelectableRow]="measurement">
+                        <td *ngFor="let measurementcol of measurementCols">
+                            {{ (measurement[measurementcol.field])?measurement[measurementcol.field]:'None'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="fa fa-close" (click)="onDiscardMsType()" label="Discard"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="onAddRowMsType()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>

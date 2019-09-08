@@ -1,0 +1,42 @@
+<div #map class="map" id="open-street-map"></div>
+
+<div class="layer-control-wrapper">
+    <p-checkbox [(ngModel)]="overLayerModels.Alarms" (ngModelChange)="apply('Alarms')"
+                binary="true" label="Alarms"></p-checkbox>
+    <p-checkbox [(ngModel)]="overLayerModels.Events" (ngModelChange)="apply('Events')"
+                binary="true" label="Events"></p-checkbox>
+
+    <p-checkbox [(ngModel)]="overLayerModels.Measurements"
+                *ngIf="msList.length>0"
+                (ngModelChange)="apply('Measurements_')"
+                binary="true" label="Measurements"></p-checkbox>
+    <div class="sub-ms-list">
+        <p-checkbox  *ngFor="let msitem of msList"
+                     binary="true"
+                     [(ngModel)]="overLayerModels['Measurements_' + msitem.id]"
+                     (ngModelChange)="onSubMsMrVisible('Measurements', msitem.id)"
+                     label="{{msitem.name}}"></p-checkbox>
+    </div>
+
+    <p-checkbox [(ngModel)]="overLayerModels.Meterings"
+                *ngIf="mrList.length>0"
+                (ngModelChange)="apply('Meterings_')"
+                binary="true" label="Meterings"></p-checkbox>
+
+    <div class="sub-mr-list">
+        <p-checkbox  *ngFor="let mritem of mrList"
+                     binary="true"
+                     [(ngModel)]="overLayerModels['Meterings_' + mritem.id]"
+                     (ngModelChange)="onSubMsMrVisible('Meterings',mritem.id)"
+                     label="{{mritem.name}}"></p-checkbox>
+    </div>
+
+</div>
+
+<app-time-selector
+        [isEnabledSetBtn] = "isEnabledTimeSel"
+        *ngIf="isShowTimePicker"
+        (onSetPeriod)="onSetMeteringTs($event)" ></app-time-selector>
+
+<app-measurement *ngIf="accessTokenSub"></app-measurement>
+<app-metering *ngIf="accessTokenSub"></app-metering>

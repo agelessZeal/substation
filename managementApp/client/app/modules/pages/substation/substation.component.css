@@ -1,0 +1,23 @@
+.substations-container {
+    display: flex;
+}
+.mg-breadcrumb {
+    position: fixed;
+    top: 66px;
+    left: 246px;
+    width: calc(100vw - 266px);
+    padding: 5px 10px;
+    background-color: #e6e6e6c9;
+    border: 1px solid #c3c3c3;
+    border-radius: 3px;
+}
+.mg-bd-item {
+    display: inline-block;
+    margin-right: 15px;
+    font-weight: 500;
+    color: #037bfc;
+    cursor: pointer;
+}
+.mg-bd-item:hover{
+    text-decoration: underline;
+}

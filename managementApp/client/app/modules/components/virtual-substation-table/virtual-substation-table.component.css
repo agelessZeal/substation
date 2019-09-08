@@ -1,0 +1,10 @@
+.virtual-substation-list {
+    width: 2270px;
+    display: inline-block;
+}
+.th-location-wrap {
+    width: 240px;
+}
+.th-id-wrap:nth-child(3) {
+    width: 135px;
+}

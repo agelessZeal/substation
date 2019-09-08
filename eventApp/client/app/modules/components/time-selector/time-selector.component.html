@@ -1,0 +1,25 @@
+<div id="ev-time-selector">
+    <h6>Metering Setting</h6>
+    <input placeholder="Start Time"
+           [(ngModel)]="startDate"
+           (ngModelChange)="onChangeToDate($event)"
+           [owlDateTimeTrigger]="todt" [owlDateTime]="todt">
+    <owl-date-time #todt></owl-date-time>
+    <div class="ev-time-selector">
+        <input type="number" [(ngModel)]="rD">
+        <span>D</span>
+        <input type="number" [(ngModel)]="rH">
+        <span>H</span>
+        <input type="number" [(ngModel)]="rM">
+        <span>M</span>
+        <input type="number" [(ngModel)]="rS">
+        <span>S</span>
+    </div>
+    <button type="button"
+            [disabled]="!isEnabledSetBtn"
+            class="btn btn-primary"
+            (click)="onSetTimeBtn()">
+        {{ (isEnabledSetBtn)?'SET':'' }}
+        <i class="fa fa-spin fa-spinner" *ngIf="!isEnabledSetBtn"></i>
+    </button>
+</div>

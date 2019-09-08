@@ -1,0 +1,11 @@
+.device-list {
+    width: 1350px;
+}
+.device-list:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -20px;
+    width: 20px;
+    height: 1px;
+}

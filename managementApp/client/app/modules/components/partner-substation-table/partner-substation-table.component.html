@@ -1,0 +1,87 @@
+<div class="partner-substation-list card mg-app-component"  id="{{tableId}}" *ngIf="isEnabled">
+    <div class="content-loading" *ngIf="!contentLoaded">
+        <img src="../../../../assets/img/loading.svg">
+    </div>
+    <div class="card-header">
+        <div class="card-title">
+            <h4>Substations</h4>
+            <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-setting-bar">
+            <div class="dropdown mg-dropdown-area" >
+                <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                        pTooltip="Column Setting"  tooltipPosition="top"
+                        (click)="isShowSetting = !isShowSetting">
+                    <i class="fa fa-cog"></i>
+                </button>
+                <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                    <div style="text-align:left">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Visible</th>
+                                <th>Column</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let subcol of subCols">
+                                <td><p-checkbox binary="true" value="true" [disabled]="subcol.visibility && curSelColsCnt == 1"
+                                                (onChange)="onChangeVisibility(subcol)"
+                                                [(ngModel)]="subcol.visibility">
+                                </p-checkbox></td>
+                                <td>{{subcol.header}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <button class="btn filter-items" (click)="onChangeFilter()"
+                    pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                    [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                <i class="fa fa-filter"></i>
+            </button>
+            <div class="clearfix"></div>
+        </div>
+        <p-table #dt sortMode="multiple"
+                 [value]="substations"
+                 [paginator]="true" [rows]="10"
+                 [totalRecords]="substations.length"
+                 [(selection)]="selectedRows"
+                 selectionMode="multiple"
+                 [resizableColumns]="true"
+                 columnResizeMode="expand"
+                 (onColResize) = "onColResize($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="th-id-wrap"
+                        *ngFor="let subcol of subCols"
+                        [ngClass]="{'mg-hide': !subcol.visibility}"
+                        [pSortableColumn]=" (subcol.group != '')? subcol.group + '.' + subcol.field: subcol.field" pResizableColumn>
+                        {{subcol.header}}
+                        <p-sortIcon [field]="subcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr [ngClass]="{'mg-hide':isHideFilter}">
+                    <th *ngFor="let subcol of subCols"
+                        [ngClass]="{'mg-hide':!subcol.visibility}"
+                        [ngSwitch]="subcol.field" >
+                        <input *ngSwitchCase="subcol.field" pInputText type="text"
+                               (input)="onTblFilter($event, subcol, dt)">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-substation>
+                <tr>
+                    <td *ngFor="let subcol of subCols"
+                        [ngClass]="{'mg-hide':!subcol.visibility}">
+                        {{ (subcol.group != '')? substation[subcol.group][subcol.field]: substation[subcol.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

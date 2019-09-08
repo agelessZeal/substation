@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<title>Leaflet.MarkerCluster.LayerSupport demo page (Layers Control)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="screen.css" />
+	<script src="realworld.388.js"></script>
+
+</head>
+<body>
+
+<h2>
+	Compatibility with
+	<a href="http://leafletjs.com/reference-1.1.0.html#control-layers" target="_blank">L.Control.Layers</a>
+</h2>
+
+<input id="add" type="button" value="Add AutoMCG to Map" />
+<input id="remove" type="button" value="Remove AutoMCG from Map" />
+
+<input id="add_marker" type="button" value="Add New Marker" />
+
+
+<div id="map"></div>
+
+
+<table>
+	<tr>
+		<th>First quarter</th>
+		<td><button data-group="1" data-op="checkIn">checkIn</button></td>
+		<td><button data-group="1" data-op="checkOut">checkOut</button></td>
+		<td><button data-group="1" data-op="addLayer">addLayer</button></td>
+		<td><button data-group="1" data-op="removeLayer">removeLayer</button></td>
+	</tr>
+</table>
+
+<div id="versionsSelectionTable" style="display: none"></div>
+<div id="reloadButton"></div>
+
+<script src="https://unpkg.com/urijs@^1/src/URI.min.js"></script>
+<script src="https://unpkg.com/load-js-css@0.0.2/index.js"></script>
+
+<script src="https://unpkg.com/manage-libs-versions@0.2.1/manage-libs-versions.js"></script>
+<!--script src="manage-libs-versions.js"></script-->
+
+<script src="https://ghybs.github.io/Leaflet.FeatureGroup.SubGroup/leaflet-versions.js"></script>
+<script src="https://ghybs.github.io/Leaflet.FeatureGroup.SubGroup/leaflet.markercluster-versions.js"></script>
+<script src="libs-setup.js"></script>
+
+<script>
+
+	pageAssets = {
+		type: 'script',
+		path: './mcgLayerSupport-controlLayers-realworld.388.js'
+	};
+
+</script>
+
+<script src="demo-setup.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<div class="dev-form mg-op-form mg-app-component" *ngIf="isEnabled" id="dev-form">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h4>Device Details</h4>
+                <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    <button type="button" class="dev-form-btn btn btn-primary op-btn-save" (click)="onSaveFormData()"
+                            [disabled]="!isFormChanged">{{ (formMode)?'Add':'Save' }}
+                    </button>
+                </div>
+                <div class="ui-g-6">
+                    <button type="button" *ngIf="!formMode"
+                            class="op-btn-details btn btn-success" (click)="onMeasurements()">Measurements</button>
+                    <button type="button" *ngIf="!formMode"
+                            class="op-btn-details btn btn-success" (click)="onMeterings()">Meterings</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-content-wrap">
+                <div class="ui-g">
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="mrid">MrID</label>
+                            <input type="text" class="form-control"
+                                   [ngClass]="{'mg-error':(mrID.trim().length == 0)}"
+                                   (ngModelChange)="mrIDChange($event)"
+                                   [ngModel]="mrID" id="mrid">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" (ngModelChange)="nameChange($event)"
+                                   [ngClass]="{'mg-error':(name.trim().length == 0)}"
+                                   [ngModel]="name" id="name">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input name="description" class="form-control" (ngModelChange)="descriptionChange($event)"
+                                   [ngModel]="description" id="description">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Location</h5>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="latitude">Latitude</label>
+                            <input type="number" class="form-control" (ngModelChange)="latitudeChange($event)"
+                                   [ngModel]="latitude" id="latitude">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="longitude">Longitude</label>
+                            <input type="number" class="form-control" (ngModelChange)="longitudeChange($event)"
+                                   [ngModel]="longitude" id="longitude">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="altitude">Altitude</label>
+                            <input type="number" class="form-control" (ngModelChange)="altitudeChange($event)"
+                                   [ngModel]="altitude" id="altitude">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Device Type</h5>
+                    </div>
+                    <div class="ui-g-3">
+                        <p>MrID : {{selectedDeviceTypeRow.mrid}}</p>
+                        <p>Vendor : {{selectedDeviceTypeRow.vendor}}</p>
+                        <p>SerNum : {{selectedDeviceTypeRow.serNum}}</p>
+                    </div>
+                    <div class="ui-g-3">
+                        <p>HwRev : {{selectedDeviceTypeRow.hwRev}}</p>
+                        <p>SwRev : {{selectedDeviceTypeRow.swRev}}</p>
+                        <p>Model : {{selectedDeviceTypeRow.model}}</p>
+                    </div>
+                    <div class="ui-g-3">
+                        <p>Owner : {{selectedDeviceTypeRow.owner}}</p>
+                        <p>PrimeOps : {{selectedDeviceTypeRow.primeOps}}</p>
+                        <p>SecondOps : {{selectedDeviceTypeRow.secondOps}}</p>
+                    </div>
+                    <div class="ui-g-3">
+                        <button type="button" class="btn btn-info mg-show-popup-tbl" (click)="onShowDeviceTypesDialog()">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Iec61850</h5>
+                    </div>
+                    <div class="ui-g-12">
+                        <p-table #dt sortMode="multiple"
+                                 [value]="iecList"
+                                 [paginator]="true" [rows]="5"
+                                 [totalRecords]="iecList.length"
+                                 selectionMode="multiple">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th *ngFor="let ieccol of iecCols" [pSortableColumn]="ieccol.field">
+                                        {{ieccol.header}}
+                                        <p-sortIcon [field]="ieccol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                                    </th>
+                                    <th style="width:4em"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-iec>
+                                <tr>
+                                    <td pEditableColumn *ngFor="let ieccol of iecCols">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text"
+                                                       [(ngModel)]="iec[ieccol.field]"
+                                                       (blur)="onContactEditComplete(iec)"
+                                                       (keydown.tab)="onContactEditComplete(iec)"
+                                                       (keydown.enter)="onContactEditComplete(iec)">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{iec[ieccol.field]}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td>
+                                        <button pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="onDeleteIec61850(iec)"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary" let-iec>
+                                <div style="text-align:left">
+                                    <button type="button" pButton icon="fa fa-plus" (click)="onShowAddDialog()" label="Add"></button>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-dialog header="Contact Details" [(visible)]="displayAddModal" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="form-group">
+                    <label for="newIec61850">Iec61850</label>
+                    <input [ngModel]="newIec.iec61850"
+                           [ngClass]="{'mg-error':(newIec.iec61850.trim().length == 0)}"
+                           (ngModelChange)="newIec61850Change($event)"
+                           type="text" class="form-control" id="newIec61850">
+                </div>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="form-group">
+                    <label for="nIecvalue">Value</label>
+                    <input [ngModel]="newIec.value"
+                           [ngClass]="{'mg-error':(newIec.value.trim().length == 0)}"
+                           (ngModelChange)="newIecValueChange($event)"
+                           type="text" class="form-control" id="nIecvalue">
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="fa fa-close" (click)="onDiscard()" label="Discard"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="onAddRow()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+    <p-dialog header="Device Types" [width]="1400"
+              [(visible)]="displayDeviceTypeModal" [responsive]="true" [modal]="true">
+        <div class="ui-g">
+            <button class="btn filter-items" (click)="onChangeFilter()"
+                    pTooltip="{{ (isDeviceHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                    [ngClass]="{'btn-primary':!isDeviceHideFilter, 'btn-secondary':isDeviceHideFilter}" >
+                <i class="fa fa-filter"></i>
+            </button>
+        </div>
+        <div class="ui-g">
+            <p-table #dt sortMode="multiple"
+                     [value]="deviceTypes"
+                     [paginator]="true" [rows]="5"
+                     [totalRecords]="deviceTypes.length"
+                     [(selection)]="selectedDeviceTypeRow"
+                     selectionMode="single">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let devicetypecol of deviceTypeCols" [pSortableColumn]="devicetypecol.field">
+                            {{devicetypecol.header}}
+                            <p-sortIcon [field]="devicetypecol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                        </th>
+                    </tr>
+                    <tr [ngClass]="{'mg-hide':isDeviceHideFilter}">
+                        <th *ngFor="let devicetypecol of deviceTypeCols" [ngSwitch]="devicetypecol.field">
+                            <input *ngSwitchCase="devicetypecol.field" pInputText type="text"
+                                   (input)="dt.filter($event.target.value, devicetypecol.field, devicetypecol.filterMatchMode)">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-devicetype>
+                    <tr [pSelectableRow]="devicetype">
+                        <td *ngFor="let devicetypecol of deviceTypeCols">
+                            {{devicetype[devicetypecol.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="fa fa-close" (click)="onDiscardDeviceType()" label="Discard"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="onSelectDeviceType()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>

@@ -1,0 +1,29 @@
+{
+  "client_info":{
+    "msal_info": {
+      "clientID": "b6a3a0e8-c3e3-4efd-84e7-966700553c21",
+      "authority": "https://login.microsoftonline.com/smartegrity.onmicrosoft.com/",
+      "redirectUri": "https://localhost:8082/",
+      "postLogoutRedirectUri": "https://localhost:8082/logout",
+      "consentScopes": "api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user",
+      "reqScopes": "api://b6a3a0e8-c3e3-4efd-84e7-966700553c21/default"
+    },
+    "storeInfo": {
+      "tokenKey": "management_app_token",
+      "username": "management_app_username",
+      "exptime": "management_app_expire_time",
+      "settingKey":"management_app_setting"
+    },
+    "apiURL": {
+      "graphAPI": "https://graph.microsoft.com/v1.0/me",
+      "serverURL": "https://localhost:8082/api"
+    }
+  },
+  "server_info": {
+    "port": 8082,
+    "apiURL": "https://192.168.117.128:8078/management/v1",
+    "online_mode":true,
+    "pfx":"localhost.pfx",
+    "pfx_passphrase" : "1234"
+  }
+}

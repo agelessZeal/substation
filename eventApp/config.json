@@ -1,0 +1,41 @@
+{
+  "client_info":{
+    "msal_info": {
+      "clientID": "dfabc904-cbda-48c2-8bb8-fd0a6ffc3db6",
+      "authority": "https://login.microsoftonline.com/smartegrity.onmicrosoft.com/" ,
+      "redirectUri": "https://localhost:8083/" ,
+      "postLogoutRedirectUri": "https://ng-event-server-smart.192.168.2.107.nip.io/logout" ,
+      "consentScopes": "api://a88bb933-319c-41b5-9f04-eff36d985612/access_as_user",
+      "reqScopes": "api://dfabc904-cbda-48c2-8bb8-fd0a6ffc3db6/default",
+      "reqScopesSub": "api://6be90a50-0b8d-4303-8716-ce6e448d764d/default"
+    },
+    "storeInfo": {
+      "tokenKey": "event_app_token",
+      "username": "event_app_username",
+      "exptime": "event_app_expire_time",
+      "settingKey":"event_app_setting"
+    },
+    "map" :{
+      "dev_mode":false,
+      "pos" :{
+        "lat":47.4979,
+        "lng":19.0402
+      }
+    },
+    "polling_time": 10,
+    "measurement_polling_time": 20,
+    "apiURL": {
+      "graphAPI": "https://graph.microsoft.com/v1.0/me" ,
+      "serverURL": "https://ng-event-server-smart.192.168.2.107.nip.io/api" ,
+      "serverURLSubstation": "https://ng-event-server-smart.192.168.2.107.nip.io/substation"
+    }
+  },
+  "server_info": {
+    "port": 8083,
+    "apiURLEvent": "https://event-api.smart.svc.cluster.local:8077/event/v1" ,
+    "apiURLSubstation": "https://substation-api-demo-aspn.smart.svc.cluster.local:8079/substation/v1" ,
+    "online_mode":true,
+    "pfx":"localhost.pfx",
+    "pfx_passphrase" : "1234"
+  }
+  }

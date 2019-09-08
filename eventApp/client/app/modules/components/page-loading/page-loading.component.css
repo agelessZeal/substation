@@ -1,0 +1,10 @@
+#page-loading{
+    background-color: #a0a0a073;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+}

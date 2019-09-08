@@ -1,0 +1,100 @@
+<div class="device-list card mg-app-component" *ngIf="isEnabled" id="{{tableId}}">
+    <div class="content-loading" *ngIf="!contentLoaded">
+        <img src="../../../../assets/img/loading.svg">
+    </div>
+    <div class="card-header">
+        <div class="card-title">
+            <h4>Devices</h4>
+            <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-setting-bar">
+            <div class="dropdown mg-dropdown-area" >
+                <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                        pTooltip="Column Setting"  tooltipPosition="top"
+                        (click)="isShowSetting = !isShowSetting">
+                    <i class="fa fa-cog"></i>
+                </button>
+                <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                    <div style="text-align:left">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Visible</th>
+                                <th>Column</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let devcol of deviceCols">
+                                <td><p-checkbox binary="true" value="true" [disabled]="devcol.visibility && curSelColsCnt == 1"
+                                                (onChange)="onChangeVisibility(devcol)"
+                                                [(ngModel)]="devcol.visibility">
+                                </p-checkbox></td>
+                                <td>{{devcol.header}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <button class="btn filter-items" (click)="onChangeFilter()"
+                    pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                    [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                <i class="fa fa-filter"></i>
+            </button>
+            <button class="btn btn-danger delete-item"
+                    pTooltip="Delete Rows"  tooltipPosition="top"
+                    (click)="onDeleteRows()" [disabled]="selectedRows.length == 0">
+                <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-primary add-item" (click)="onAddNewDevice()">+ Add New</button>
+            <div class="clearfix"></div>
+        </div>
+        <p-table #dt sortMode="multiple"
+                 [value]="devices"
+                 [paginator]="true" [rows]="10"
+                 [totalRecords]="devices.length"
+                 [(selection)]="selectedRows"
+                 selectionMode="multiple"
+                 (onHeaderCheckboxToggle)="selectAllRows($event)"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="mg-item-checkbox">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="th-id-wrap"
+                        *ngFor="let devcol of deviceCols"
+                        [ngClass]="{'mg-hide': !devcol.visibility}"
+                        [pSortableColumn]=" (devcol.group != '')? devcol.group + '.' + devcol.field: devcol.field" pResizableColumn>
+                        {{devcol.header}}
+                        <p-sortIcon [field]="devcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr [ngClass]="{'mg-hide':isHideFilter}">
+                    <th></th>
+                    <th *ngFor="let devcol of deviceCols"
+                        [ngClass]="{'mg-hide':!devcol.visibility}"
+                        [ngSwitch]="devcol.field" >
+                        <input *ngSwitchCase="devcol.field" pInputText type="text"
+                               (input)="onTblFilter($event, devcol, dt)">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-device>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="device"></p-tableCheckbox>
+                    </td>
+                    <td *ngFor="let devcol of deviceCols"  (click)="editDevice(device)"
+                        [ngClass]="{'mg-hide':!devcol.visibility}">
+                        {{ (devcol.group != '')? device[devcol.group][devcol.field]: device[devcol.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>

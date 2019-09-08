@@ -1,0 +1,48 @@
+.events-container {
+    height: 100%;
+}
+.as-split-area:first-child {
+    /*padding: 5px 10px 0 10px;*/
+}
+.ev-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.ev-alarm-container {
+    border: 1px solid #8e8d8d;
+    padding-top: 0;
+    border-radius: 5px;
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+.ev-events-container {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+    border: 1px solid #8e8d8d;
+    border-radius: 5px;
+}
+.ev-group-box-title {
+    position: absolute;
+    top: 0;
+    background: transparent;
+    text-align: center;
+    display: block;
+    width: 98%;
+    z-index: 5;
+}
+.ev-group-box-title h5 {
+    font-weight: 500;
+    background-color: white;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 1rem;
+}
+
+.ev-area-container {
+    position: relative;
+    height: 100%;
+    padding: 20px 10px 10px 10px;
+}

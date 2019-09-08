@@ -1,0 +1,110 @@
+<div class="dev-mr-list mg-op-form mg-app-component" *ngIf="isEnabled" id="{{tableId}}">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h4>Device Meterings</h4>
+                <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    <div class="dropdown mg-dropdown-area" >
+                        <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                        <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                                pTooltip="Column Setting"  tooltipPosition="top"
+                                (click)="isShowSetting = !isShowSetting">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <button type="button" class="dev-mr-btn btn btn-primary op-btn-save" (click)="onSaveFormData()"
+                                [disabled]="!isFormChanged">{{ (formMode)?'Add':'Save' }}
+                        </button>
+                        <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                            <div style="text-align:left">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Visible</th>
+                                            <th>Column</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let mrcol of meteringCols">
+                                            <td><p-checkbox binary="true" value="true" [disabled]="mrcol.visibility && curSelColsCnt == 1"
+                                                            (onChange)="onChangeVisibility(mrcol)"
+                                                            [(ngModel)]="mrcol.visibility">
+                                            </p-checkbox></td>
+                                            <td>{{mrcol.header}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn filter-items" (click)="onChangeFilter()"
+                            pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                            [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                        <i class="fa fa-filter"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p-table #dt sortMode="multiple"
+                             [value]="meterings"
+                             [paginator]="true" [rows]="10"
+                             [totalRecords]="meterings.length"
+                             selectionMode="multiple"
+                             [resizableColumns]="true"
+                             columnResizeMode="expand"
+                             (onColResize) = "onColResize($event)">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="th-id-wrap"
+                                    *ngFor="let mrcol of meteringCols"
+                                    [ngClass]="{'mg-hide': !mrcol.visibility}"
+                                    [pSortableColumn]="mrcol.field" pResizableColumn>
+                                    {{mrcol.header}}
+                                    <p-sortIcon [field]="mrcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                                </th>
+                            </tr>
+                            <tr [ngClass]="{'mg-hide':isHideFilter}">
+                                <th *ngFor="let mrcol of meteringCols"
+                                    [ngClass]="{'mg-hide':!mrcol.visibility}"
+                                    [ngSwitch]="mrcol.field" >
+                                    <input *ngSwitchCase="mrcol.field" pInputText type="text"
+                                           (input)="onTblFilter($event, mrcol, dt)">
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-metering>
+                            <tr>
+                                <ng-container *ngFor="let mrcol of meteringCols">
+                                    <td *ngIf="mrcol.field != 'isPublic'" [ngClass]="{'mg-hide':!mrcol.visibility}">
+                                        {{ (mrcol.field != 'isPublic')? metering['metering'][mrcol.field]:'' }}
+                                    </td>
+                                    <td pEditableColumn *ngIf="mrcol.field == 'isPublic'"
+                                        [ngClass]="{'mg-hide':!mrcol.visibility}">
+                                        <p-cellEditor *ngIf="mrcol.field == 'isPublic'">
+                                            <ng-template pTemplate="input">
+                                                <p-dropdown [options]="isPublicCols"
+                                                            [(ngModel)]="metering[mrcol.field]"
+                                                            (onChange)="onContactEditComplete(metering)"
+                                                            [style]="{'width':'100%'}">
+                                                </p-dropdown>
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{ (mrcol.field == 'isPublic')? metering[mrcol.field]:metering['metering'][mrcol.field]}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>

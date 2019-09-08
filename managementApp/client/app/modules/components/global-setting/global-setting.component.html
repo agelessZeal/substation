@@ -1,0 +1,12 @@
+<div id="global-setting-form">
+    <p-messages [(value)]="msgs"></p-messages>
+    <button type="button" pButton
+            icon="fa {{isReadingSetting?'fa-spinner fa-spin':'fa-upload'}}"
+            (click)="onReadSetting()"
+            label="Read Config">
+    </button>
+    <input type="file" hidden
+           id="file" accept='text/plain,.json'
+           (change)="handleFileInput($event.target.files)">
+</div>
+

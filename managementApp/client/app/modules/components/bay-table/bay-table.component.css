@@ -1,0 +1,11 @@
+.bay-list {
+    width: 1200px;
+}
+.bay-list:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -20px;
+    width: 20px;
+    height: 1px;
+}

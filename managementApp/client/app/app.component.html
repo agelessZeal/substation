@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="[(loggedIn)?'/app/substation':'/app/home']">{{title}} {{appVersion}} </a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="!loggedIn" (click)="login()">
+                <i class="fa fa-sign-in"></i>Login
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="loggedIn" (click)="logout()">
+                <i class="fa fa-sign-out"></i>Logout
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="login-failed-msg" [innerHTML]="loginFailedMsg" *ngIf="!!(loginFailedMsg)">
+</div>
+
+<div class="mg-app-container">
+    <app-sidebar *ngIf="loggedIn"></app-sidebar>
+    <div #panel class="mg-app-content" *ngIf="loggedIn">
+        <router-outlet></router-outlet>
+        <button class="btn page-left-right-icon" *ngIf="loggedIn" (click)="onLeftRightScroll()">
+            <i class="fa fa-2x fa-arrow-circle-right"></i>
+        </button>
+        <button class="btn page-forward-icon" *ngIf="loggedIn" (click)="onForwardScroll()">
+            <i class="fa fa-2x fa-step-forward"></i>
+        </button>
+
+        <!--https://www.npmjs.com/package/@nicky-lenaers/ngx-scroll-to-->
+        <button class="btn page-right-left-icon" *ngIf="loggedIn" (click)="onRightLeftScroll()">
+            <i class="fa fa-2x fa-arrow-circle-left"></i>
+        </button>
+        <button class="btn page-backward-icon" *ngIf="loggedIn" (click)="onBackwardScroll()">
+            <i class="fa fa-2x fa-step-backward"></i>
+        </button>
+    </div>
+    <div class="public-area" *ngIf="!loggedIn">
+        <h5>Public Area</h5>
+    </div>
+</div>
+
+<div class="sb-page-loading" *ngIf="!pageLoaded">
+    <div class="loader"></div>
+</div>
+
+
+

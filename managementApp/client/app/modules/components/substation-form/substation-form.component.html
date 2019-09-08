@@ -1,0 +1,342 @@
+<div class="substation-form mg-op-form mg-app-component" *ngIf="isEnabled" id="substation-form">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h4>Substation Details</h4>
+                <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    <button type="button" class="btn btn-primary op-btn-save" (click)="onSaveFormData()"
+                            [disabled]="!isFormChanged">{{ (formMode)?'Add':'Save' }}</button>
+                </div>
+                <div class="ui-g-6">
+                    <button type="button" class="btn btn-success op-btn-details" (click)="onBaysTable()"
+                            *ngIf="!formMode">Bays</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-content-wrap">
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Partner</h5>
+                    </div>
+                    <div class="ui-g-9">
+                        <p>MrID : {{selectedPartnerRow.mrid}}</p>
+                        <p>EicCode : {{selectedPartnerRow.eicCode}}</p>
+                        <p>Description : {{selectedPartnerRow.description}}</p>
+                    </div>
+                    <div class="ui-g-3">
+                        <button type="button" class="btn btn-info mg-show-popup-tbl" (click)="onShowPartnersDialog()">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="mrid">MrID</label>
+                            <input type="text"  class="form-control"
+                                   [ngClass]="{'mg-error':(mrID.trim().length == 0)}"
+                                   (ngModelChange)="mrIDChange($event)"
+                                   [ngModel]="mrID" id="mrid">
+                        </div>
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input name="description" class="form-control"
+                                   (ngModelChange)="descriptionChange($event)"
+                                   [ngModel]="description" id="description">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Location</h5>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="latitude">Latitude</label>
+                            <input type="number"  class="form-control" (ngModelChange)="latitudeChange($event)"
+                                   [ngModel]="latitude" id="latitude">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="longitude">Longitude</label>
+                            <input type="number"  class="form-control" (ngModelChange)="longitudeChange($event)"
+                                   [ngModel]="longitude" id="longitude">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="altitude">Altitude</label>
+                            <input type="number"  class="form-control" (ngModelChange)="altitudeChange($event)"
+                                   [ngModel]="altitude" id="altitude">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Contacts</h5>
+                    </div>
+                    <div class="ui-g-12">
+                        <p-table #dt sortMode="multiple"
+                                 [value]="contacts"
+                                 [paginator]="true" [rows]="5"
+                                 [totalRecords]="contacts.length"
+                                 selectionMode="multiple"
+                                 (onHeaderCheckboxToggle)="selectAllRows($event)"
+                                 (onRowSelect)="onRowSelect($event)"
+                                 (onRowUnselect)="onRowUnselect($event)">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th *ngFor="let contactcol of contactCols" [pSortableColumn]="contactcol.field">
+                                        {{contactcol.header}}
+                                        <p-sortIcon [field]="contactcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                                    </th>
+                                    <th style="width:4em"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-contact>
+                                <tr>
+                                    <td pEditableColumn *ngFor="let contactcol of contactCols">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" *ngIf="contactcol.field != 'role'"
+                                                       [(ngModel)]="contact[contactcol.field]"
+                                                       (blur)="onContactEditComplete(contact)"
+                                                       (keydown.tab)="onContactEditComplete(contact)"
+                                                       (keydown.enter)="onContactEditComplete(contact)">
+                                                <p-dropdown [options]="contactRoles" *ngIf="contactcol.field == 'role'"
+                                                            [(ngModel)]="contact[contactcol.field]"
+                                                            (onChange) = "onContactEditComplete(contact)"
+                                                            [style]="{'width':'100%'}">
+                                                </p-dropdown>
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{contact[contactcol.field]}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td>
+                                        <button pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="onDeleteContact(contact)"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="summary" let-contact>
+                                <div style="text-align:left">
+                                    <button type="button" pButton icon="fa fa-plus" (click)="onShowAddDialog()" label="Add"></button>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Address</h5>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="address-number">Number</label>
+                            <input type="text" class="form-control" (ngModelChange)="numberChange($event)"
+                                   [ngModel]="addressNumber" id="address-number">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="street">Street</label>
+                            <input type="text"  class="form-control" (ngModelChange)="streetChange($event)"
+                                   [ngModel]="street" id="street">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" (ngModelChange)="cityChange($event)"
+                                   [ngModel]="city" id="city">
+                        </div>
+                    </div>
+                    <div class="ui-g-3">
+                        <div class="form-group">
+                            <label for="locality">Locality</label>
+                            <input type="text" class="form-control" (ngModelChange)="localityChange($event)"
+                                   [ngModel]="locality" id="locality">
+                        </div>
+                    </div>
+                    <div class="ui-g-3">
+                        <div class="form-group">
+                            <label for="zip">Zip</label>
+                            <input type="text" class="form-control" (ngModelChange)="zipChange($event)"
+                                   [ngModel]="zip" id="zip">
+                        </div>
+                    </div>
+                    <div class="ui-g-3">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control" (ngModelChange)="countryChange($event)"
+                                   [ngModel]="country" id="country">
+                        </div>
+                    </div>
+                    <div class="ui-g-3">
+                        <div class="form-group">
+                            <label for="region">Region</label>
+                            <input type="text" class="form-control" (ngModelChange)="regionChange($event)"
+                                   [ngModel]="region" id="region">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-dialog header="Contact Details" [(visible)]="displayAddModal" [responsive]="true" showEffect="fade" [modal]="true">
+        <div class="ui-g">
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <label for="nFName">First Name</label>
+                    <input [ngModel]="newContact.firstname" (ngModelChange)="newFirstNameChange($event)"
+                           type="text" class="form-control" id="nFName">
+                </div>
+            </div>
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <label for="nSName">Last Name</label>
+                    <input [ngModel]="newContact.lastname" (ngModelChange)="newLastNameChange($event)"
+                           type="text" class="form-control" id="nSName">
+                </div>
+            </div>
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <label for="nPhone">Phone</label>
+                    <input [ngModel]="newContact.phone" (ngModelChange)="newPhoneChange($event)"
+                           type="text" class="form-control" id="nPhone">
+                </div>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <label for="nFName">Email</label>
+                    <input [ngModel]="newContact.email" (ngModelChange)="newEmailChange($event)"
+                           type="text" class="form-control" id="nEmail">
+                </div>
+            </div>
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <label for="nCRole">Role</label>
+                    <select class="form-control" (ngModelChange)="newRoleChange($event)"
+                            [ngModel]="newContact.role">
+                        <option *ngFor="let contactrole of contactRoles"  id="nCRole">
+                            {{contactrole.value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <label for="nUserID">UserID</label>
+                    <input [ngModel]="newContact.userid" [ngClass]="{'mg-error':(newContact.userid.trim().length == 0)}"
+                           (ngModelChange)="newUserIDChange($event)"
+                           type="text" class="form-control" id="nUserID">
+                </div>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="fa fa-close" (click)="onDiscard()" label="Discard"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="onAddRow()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>
+
+<div class="partner-substation-list" [ngClass]="{'mg-hide':!displayPartnerModal}" id="substation-partner-tbl">
+    <div class="custom-partner-modal">
+        <h6>Partner</h6>
+        <span class="pi pi-times close-icon" (click)="onDiscardPartner()" ></span>
+        <div class="custom-modal-body">
+            <div class="table-setting-bar">
+                <div class="dropdown mg-dropdown-area" >
+                    <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                    <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                            pTooltip="Column Setting"  tooltipPosition="top"
+                            (click)="isShowSetting = !isShowSetting">
+                        <i class="fa fa-cog"></i>
+                    </button>
+                    <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                        <div style="text-align:left">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Visible</th>
+                                    <th>Column</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let partnercol of partnerCols">
+                                    <td><p-checkbox binary="true" value="true" [disabled]="partnercol.visibility && curSelColsCnt == 1"
+                                                    (onChange)="onChangeVisibility(partnercol)"
+                                                    [(ngModel)]="partnercol.visibility">
+                                    </p-checkbox></td>
+                                    <td>{{partnercol.header}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn filter-items" (click)="onChangeFilter()"
+                        pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                        [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                    <i class="fa fa-filter"></i>
+                </button>
+                <div class="clearfix"></div>
+            </div>
+            <p-table #dt sortMode="multiple"
+                     [value]="partners"
+                     [totalRecords]="partners.length"
+                     [paginator]="true" [rows]="5"
+                     [(selection)]="selectedPartnerRow"
+                     selectionMode="single"
+                     [resizableColumns]="true"
+                     columnResizeMode="expand"
+                     (onColResize) = "onColResize($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="th-id-wrap"
+                            *ngFor="let partnercol of partnerCols"
+                            [ngClass]="{'mg-hide': !partnercol.visibility}"
+                            [pSortableColumn]=" (partnercol.group != '')? partnercol.group + '.' + partnercol.field: partnercol.field" pResizableColumn>
+                            {{partnercol.header}}
+                            <p-sortIcon [field]="partnercol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                        </th>
+                    </tr>
+                    <tr [ngClass]="{'mg-hide':isHideFilter}">
+                        <th *ngFor="let partnercol of partnerCols"
+                            [ngClass]="{'mg-hide':!partnercol.visibility}"
+                            [ngSwitch]="partnercol.field" >
+                            <input *ngSwitchCase="partnercol.field" pInputText type="text"
+                                   (input)="onTblFilter($event, partnercol, dt)">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-partner>
+                    <tr [pSelectableRow]="partner">
+                        <td *ngFor="let partnercol of partnerCols"
+                            [ngClass]="{'mg-hide':!partnercol.visibility}">
+                            {{ (partnercol.group != '')? partner[partnercol.group][partnercol.field]: partner[partnercol.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" class="discard-btn" pButton icon="fa fa-close" (click)="onDiscardPartner()" label="Discard"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="onSelectPartner()" label="Save"></button>
+            </div>
+        </div>
+    </div>
+</div>

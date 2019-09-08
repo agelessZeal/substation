@@ -1,0 +1,102 @@
+<div class="measurement-list card mg-app-component" id="{{tableId}}">
+    <div class="content-loading" *ngIf="!contentLoaded">
+        <img src="../../../../assets/img/loading.svg">
+    </div>
+    <div class="card-header">
+        <div class="card-title">
+            <h4>Measurements</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-setting-bar">
+            <div class="dropdown mg-dropdown-area" >
+                <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                        pTooltip="Column Setting"  tooltipPosition="top"
+                        (click)="isShowSetting = !isShowSetting">
+                    <i class="fa fa-cog"></i>
+                </button>
+                <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                    <div style="text-align:left">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Visible</th>
+                                <th>Column</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let mscol of measurementCols">
+                                <td><p-checkbox binary="true" value="true" [disabled]="mscol.visibility && curSelColsCnt == 1"
+                                                (onChange)="onChangeVisibility(mscol)"
+                                                [(ngModel)]="mscol.visibility">
+                                </p-checkbox></td>
+                                <td>{{mscol.header}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <button class="btn filter-items" (click)="onChangeFilter()"
+                    pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                    [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                <i class="fa fa-filter"></i>
+            </button>
+            <button class="btn btn-danger delete-item"
+                    pTooltip="Delete Rows"  tooltipPosition="top"
+                    (click)="onDeleteRows()" [disabled]="selectedRows.length == 0">
+                <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-primary add-item" (click)="onAddNewRow()">+ Add New</button>
+            <div class="clearfix"></div>
+        </div>
+        <p-table #dt sortMode="multiple"
+                 [value]="measurements"
+                 [paginator]="true" [rows]="10"
+                 [totalRecords]="measurements.length"
+                 [(selection)]="selectedRows"
+                 selectionMode="multiple"
+                 [resizableColumns]="true"
+                 columnResizeMode="expand"
+                 (onColResize) = "onColResize($event)"
+                 (onHeaderCheckboxToggle)="selectAllRows($event)"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="mg-item-checkbox">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="th-id-wrap"
+                        *ngFor="let mscol of measurementCols"
+                        [ngClass]="{'mg-hide': !mscol.visibility}"
+                        [pSortableColumn]="mscol.field" pResizableColumn>
+                        {{mscol.header}}
+                        <p-sortIcon [field]="mscol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr [ngClass]="{'mg-hide':isHideFilter}">
+                    <th></th>
+                    <th *ngFor="let mscol of measurementCols"
+                        [ngClass]="{'mg-hide':!mscol.visibility}"
+                        [ngSwitch]="mscol.field" >
+                        <input *ngSwitchCase="mscol.field" pInputText type="text"
+                               (input)="onTblFilter($event, mscol, dt)">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-measurement>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="measurement"></p-tableCheckbox>
+                    </td>
+                    <td *ngFor="let mscol of measurementCols"  (click)="editMs(measurement)"
+                        [ngClass]="{'mg-hide':!mscol.visibility}">
+                        {{ (measurement[mscol.field])?measurement[mscol.field]:'None' }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>

@@ -1,0 +1,267 @@
+<div id="alarm-container">
+    <div>
+        <app-ev-breadcrumb></app-ev-breadcrumb>
+        <button type="button" id="alarm-tbl-sel-btn" (click)="onForceRowSelect()" style="display: none"></button>
+        <app-page-loading *ngIf="!contentLoaded"></app-page-loading>
+        <p-tabView (onChange)="onChangeTabView($event)">
+            <p-tabPanel header="Active" leftIcon="pi pi-check" [selected]="alarmTabMode">
+                <div class="ev-table-wrapper" id="{{tableId}}">
+                    <div class="table-setting-bar">
+                        <div class="dropdown mg-dropdown-area" >
+                            <div class="drop-down-backdrop" (click)="isShowSetting=false" *ngIf="isShowSetting"></div>
+                            <button type="button" class="btn btn-primary dropdown-toggle mg-toggle-btn"
+                                    pTooltip="Column Setting"  tooltipPosition="top"
+                                    (click)="isShowSetting = !isShowSetting">
+                                <i class="fa fa-cog"></i>
+                            </button>
+                            <div class="dropdown-menu mg-dropdown-menu" *ngIf="isShowSetting">
+                                <div style="text-align:left">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Visible</th>
+                                            <th>Column</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let alarmcol of alarmCols">
+                                            <td>
+                                                <p-checkbox binary="true" value="true" [disabled]="alarmcol.visibility && curSelColsCnt == 1"
+                                                            (onChange)="onChangeVisibility(alarmcol)"
+                                                            [(ngModel)]="alarmcol.visibility">
+                                                </p-checkbox>
+                                            </td>
+                                            <td>{{alarmcol.header}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn filter-items" (click)="onChangeFilter()"
+                                pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}"  tooltipPosition="top"
+                                [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}" >
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <p-table #activedt sortMode="multiple"
+                             [style]="{'width':'1670px'}"
+                             [value]="alarms"
+                             [paginator]="true"
+                             [rows]="10"
+                             [totalRecords]="alarms.length"
+                             [(selection)]="selectedRow"
+                             selectionMode="single"
+                             (onRowSelect)="onActiveAlarmSelect($event)"
+                             (onRowUnselect)="onActiveAlarmDeselect($event)">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="th-id-wrap"
+                                    [pSortableColumn]="'id'">ID
+                                    <p-sortIcon [field]="'id'" ariaLabel="Activate to sort"></p-sortIcon>
+                                </th>
+                                <th class="th-id-wrap" style="width: 76px;">Action</th>
+                                <th class="th-id-wrap"
+                                    *ngFor="let alarmcol of alarmCols"
+                                    [ngClass]="{'mg-hide': !alarmcol.visibility}"
+                                    [pSortableColumn]="alarmcol.field" pResizableColumn>
+                                    {{alarmcol.header}}
+                                    <p-sortIcon [field]="alarmcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                                </th>
+                            </tr>
+                            <tr [ngClass]="{'mg-hide':isHideFilter}">
+                                <th [ngSwitch]="'id'">
+                                    <input *ngSwitchCase="'id'" pInputText type="text"
+                                           (input)="activedt.filter($event.target.value, 'id', null)">
+                                </th>
+                                <th></th>
+                                <th *ngFor="let alarmcol of alarmCols"
+                                    [ngClass]="{'mg-hide':!alarmcol.visibility}"
+                                    [ngSwitch]="alarmcol.field">
+                                    <input *ngSwitchCase="alarmcol.field" pInputText type="text"
+                                           (input)="activedt.filter($event.target.value, alarmcol.field, null)">
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-activeAlarm>
+                            <tr [pSelectableRow]="activeAlarm" id="active-alarm-{{activeAlarm.id}}">
+                                <td>
+                                    {{ activeAlarm['id']}}
+                                </td>
+                                <td>
+                                    <a class="row-edit-btn" (click)="onEditActiveAlarmRow(activeAlarm)">Edit</a>
+                                </td>
+                                <td *ngFor="let alarmcol of alarmCols"
+                                    [ngClass]="{'mg-hide':!alarmcol.visibility}">
+                                    <span *ngIf="alarmcol.field == 'severity'"
+                                          class="ev-severity-btn ev-sv-{{activeAlarm[alarmcol.field].toLowerCase()}}">
+                                        {{activeAlarm[alarmcol.field]}}
+                                    </span>
+                                    {{ (alarmcol.field != 'severity')? activeAlarm[alarmcol.field]:'' }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="InActive" leftIcon="pi pi-times" [selected]="!alarmTabMode">
+                <in-active-app-alarm></in-active-app-alarm>
+            </p-tabPanel>
+        </p-tabView>
+        <div class="action-detail-form">
+            <p-dialog header="Action Details" [style]="{'min-width': '400px'}" [resizable]="true" [closable]="false"
+                      [(visible)]="displayAddActionModal" [responsive]="true" showEffect="fade" [modal]="true">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label>Action</label>
+                            <p-dropdown [options]="actionList"
+                                        [(ngModel)]="newActionName"
+                                        (onChange)="onNewActionNameChange($event)"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label for="nActionDate">Date</label>
+                            <input placeholder="Date Time:"
+                                   class="form-control" id="nActionDate"
+                                   [(ngModel)]="newActionDate" (ngModelChange)="onNewActionDateChange($event)"
+                                   [owlDateTimeTrigger]="actiondt" [owlDateTime]="actiondt">
+                            <owl-date-time #actiondt></owl-date-time>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label for="newActionMsg">Message</label>
+                            <textarea rows="5" id="newActionMsg" class="form-control"
+                                      [(ngModel)]="newActionMsg"
+                                      (ngModelChange)="onNewActionMsgChange($event)"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <p-footer>
+                    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                        <button type="button" pButton
+                                icon="fa fa-close"
+                                (click)="onDiscard()"
+                                label="Cancel"></button>
+                        <button type="button" pButton
+                                [disabled]="!(newActionDate && newActionMsg)"
+                                icon="fa {{isActionAdding?'fa-spinner fa-spin':'fa-check'}}"
+                                (click)="onAddAlarmAction()"
+                                label="Add"></button>
+                        <img src="../../../../assets/img/resizer.png" class="dlg-resize-btn">
+                    </div>
+                </p-footer>
+            </p-dialog>
+        </div>
+        <div class="alarm-edit-form">
+            <p-dialog header="Alarm Details" [style]="{'width': '800px','min-width':'800px'}" [resizable]="true"
+                      [closable]="false"
+                      [(visible)]="displayEditAlarmModal" [responsive]="true" showEffect="fade" [modal]="true">
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="form-group alarm-detail-form">
+                            <p><span>AlarmID: </span>{{curAlarmInfo?.id}}</p>
+                            <p><span>DeviceMrID: </span>{{curAlarmInfo?.devicemrid}}</p>
+                            <p><span>Date: </span>{{curAlarmInfo?.date}}</p>
+                            <p><span>PostponeDate: </span>{{curAlarmInfo?.postponedate}}</p>
+                            <p><span>State: </span>{{curAlarmInfo?.state}}</p>
+                        </div>
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="form-group alarm-detail-form">
+                            <p><span>Name: </span>{{curAlarmInfo?.name}}</p>
+                            <p><span>Cause: </span>{{curAlarmInfo?.cause}}</p>
+                            <p><span>ActiveCount: </span>{{curAlarmInfo?.activecount}}</p>
+                            <p><span>ActiveDate: </span>{{curAlarmInfo?.activedate}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label for="severity-sel">Severity: </label>
+                            <select class="form-control"
+                                    [(ngModel)]="curSeverity"
+                                    (ngModelChange)="onSeverityChange($event)"
+                                    id="severity-sel">
+                                <option *ngFor="let svitem of severities"
+                                        [selected]="curAlarmInfo && (svitem == curAlarmInfo.severity)">{{svitem}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="remark">Remark: </label>
+                            <textarea class="form-control"
+                                      [(ngModel)]="curRemark"
+                                      (ngModelChange)="onRemarkChange($event)"
+                                      rows="3" id="remark">{{curAlarmInfo?.remark}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p-table #dt sortMode="multiple"
+                                 [value]="alarmActions"
+                                 [paginator]="true"
+                                 [rows]="5"
+                                 [totalRecords]="alarmActions.length"
+                                 selectionMode="single"
+                                 (onRowSelect)="onActiveAlarmSelect($event)"
+                                 (onRowUnselect)="onActiveAlarmDeselect($event)">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th *ngFor="let actioncol of actionCols"
+                                        [pSortableColumn]="actioncol.field">
+                                        {{actioncol.header}}
+                                        <p-sortIcon [field]="actioncol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th *ngFor="let actioncol of actionCols" [ngSwitch]="actioncol.field">
+                                        <input *ngSwitchCase="actioncol.field" pInputText type="text"
+                                               (input)="dt.filter($event.target.value, actioncol.field, actioncol.filterMatchMode)">
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-actiondata>
+                                <tr [pSelectableRow]="actiondata">
+                                    <td *ngFor="let actioncol of actionCols">
+                                        {{actiondata[actioncol.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div style="text-align:left" *ngIf="alarmTabMode" class="ev-add-action-btn">
+                            <button type="button" pButton
+                                    icon="fa fa-plus"
+                                    (click)="onAddActionDialog()"
+                                    label="Add"></button>
+                        </div>
+                    </div>
+                </div>
+                <p-footer>
+                    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                        <button type="button" pButton
+                                icon="fa fa-close"
+                                (click)="onDiscardAlarm()"
+                                label="Cancel"></button>
+                        <button type="button" pButton
+                                [disabled]="!isAlarmEditFormChanged"
+                                icon="fa {{isAlarmSaving?'fa-spinner fa-spin':'fa-check'}}"
+                                (click)="onSaveAlarm()"
+                                label="Save"></button>
+                        <img src="../../../../assets/img/resizer.png" class="dlg-resize-btn">
+                    </div>
+                </p-footer>
+            </p-dialog>
+        </div>
+    </div>
+</div>

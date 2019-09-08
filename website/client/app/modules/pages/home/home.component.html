@@ -1,0 +1,127 @@
+<section class="sw-banner">
+  <div class="sw-banner-outer">
+    <img src="../../../../assets/img/banner_bg.png" id="banner-bg">
+    <div class="sw-banner-slider">
+      <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide >
+          <img src="../../../../assets/img/slider_1.png" class="slider-item">
+          <div class="serviceSubTitle" [innerHTML]="'banner_title_1' | translate"></div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <img src="../../../../assets/img/slider_2.png" class="slider-item">
+          <div class="serviceSubTitle" [innerHTML]="'banner_title_2' | translate"></div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <img src="../../../../assets/img/slider_3.png" class="slider-item">
+          <div class="serviceSubTitle" [innerHTML]="'banner_title_3' | translate"></div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+    <img src="../../../../assets/img/header_bottom.png" id="banner-bottom">
+    <a id="serviceMoreInfo" [routerLink]="['/app/more-info']">{{ 'more info' | translate }}</a>
+  </div>
+</section>
+<section class="sw-service" id="service">
+  <img src="../../../../assets/img/center_back2.png" id="service-split-img">
+  <p class="serviceTitle">{{ 'services' | translate }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-12">
+        <div class="service-item-outer">
+          <img src="../../../../assets/img/setting_ico.png">
+          <h4 [innerHTML]="'service_item_title1' | translate"></h4>
+          <p [innerHTML]="'service_item_description1' | translate"></p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="service-item-outer">
+          <img src="../../../../assets/img/thumb_icon.png">
+          <h4>{{ 'service_item_title2' | translate }}</h4>
+          <p>{{ 'service_item_description2' | translate }}</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="service-item-outer">
+          <img src="../../../../assets/img/doc_ico.png">
+          <h4>{{ 'service_item_title3' | translate }}</h4>
+          <p>{{ 'service_item_description3' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sw-about-us" id="about-us">
+  <img src="../../../../assets/img/center_back1.png" id="aboutUsImg">
+  <p id="aboutUsTitle">{{ 'about us' | translate }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <p id="aboutUsDescription">{{ 'about_us_description' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sw-about-item">
+  <div class="container">
+    <div class="about-item-outer">
+      <div class="about-item">
+        <img src="../../../../assets/img/street1.png">
+      </div>
+      <div class="about-item">
+        <div>
+          <h4>{{ 'about_us_item_title1' | translate }}</h4>
+          <p>{{ 'about_us_item_description1' | translate }}</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <img src="../../../../assets/img/lamp1.png">
+      </div>
+      <div class="about-item">
+        <div>
+          <h4>{{ 'about_us_item_title2' | translate }}</h4>
+          <p>{{ 'about_us_item_description2' | translate }}</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <img src="../../../../assets/img/world1.png">
+      </div>
+      <div class="about-item">
+        <div>
+          <h4>{{ 'about_us_item_title3' | translate }}</h4>
+          <p>{{ 'about_us_item_description3' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sw-contact-us" id="contact">
+  <img src="../../../../assets/img/center_back2.png" id="contactus-split-img">
+  <p id="contactUsTitle">{{ 'contact' | translate }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="offset-lg-1 col-lg-10 offset-sm-0">
+        <div class="contact-info-outer">
+          <div class="img-outer">
+            <img src="../../../../assets/img/bottom_street1.png">
+          </div>
+          <div id="googleMap">
+            <div class="mapouter">
+              <div class="gmap_canvas">
+                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=1143%20Budapest%20llka%20utca%2031&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                <a href="https://www.embedgooglemap.net/blog/best-wordpress-themes/">embedgooglemap.net</a>
+              </div>
+            </div>
+          </div>
+          <div id="contact-info">
+            {{ 'service_address' | translate }}<br>
+            {{ 'service_factory' | translate }}<br>
+            {{ 'service_tel' | translate }}<br>
+            {{ 'service_email' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

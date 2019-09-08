@@ -1,0 +1,255 @@
+.sw-menu > nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #606060;
+    padding: 0 1rem;
+    z-index: 1000;
+}
+
+#navbarNav {
+    justify-content: center;
+}
+
+.sw-banner {
+    margin-top: 40px;
+}
+
+#navbarNav .nav-link {
+    color: #ffffff;
+    font-family: Roboto;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+#banner-bg {
+    width: 100%;
+}
+
+.sw-banner-slider {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: -1;
+}
+
+.slider-item {
+    width: 100%;
+}
+
+#banner-bottom {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -10%;
+    z-index: 1;
+}
+
+
+
+#serviceMoreInfo {
+    margin-bottom: 0;
+    font-family: Roboto Condensed;
+    font-size: 1.2rem;
+    display: inline-block;
+    position: absolute;
+    bottom: 10%;
+    left: 24%;
+    color: #ffffff;
+    z-index: 1;
+    width: 180px;
+    text-align: center;
+    text-transform: uppercase;
+    border: 2px solid #ffffffa1;
+    background-color: #34085985;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none !important;
+}
+
+.serviceSubTitle {
+    margin-bottom: 0;
+    font-family: Roboto Condensed;
+    font-size: 24px;
+    display: inline-block;
+    position: absolute;
+    top: 10%;
+    left: 22%;
+    color: white;
+    z-index: 1;
+    text-align: center;
+}
+
+
+.login-failed-msg {
+    position: fixed;
+    right: 10px;
+    top: 44px;
+    padding: 9px;
+    color: #ffffff;
+    background-color: #f90837;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+
+.sw-footer {
+    background-color: #858686;
+    /*height: 80px;*/
+}
+
+.sw-footer > div {
+    text-align: center;
+    padding: 50px 0 30px 0;
+}
+
+.sw-footer > div a {
+    padding: 5px 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+    font-family: Roboto;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.sw-footer > div span {
+    color: white;
+}
+
+/*
+=======================
+*/
+.carBtn {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    box-shadow: 1px 2px 10px -1px rgba(0, 0, 0, 0.3);
+    border-radius: 999px;
+}
+
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1440px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #aboutUsDescription {
+        padding-top: 40px;
+        font-size: 20px;
+    }
+
+    .contact-info-outer img {
+        width: 194px;
+        height: 180px;
+    }
+
+    #googleMap {
+        flex: 3;
+        height: 180px;
+    }
+
+    #contact-info[_ngcontent-c0] {
+        flex: 2;
+    }
+
+    #about-us {
+        min-height: 360px;
+        padding-bottom: 25px;
+    }
+
+    #aboutUsImg {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 992px) {
+    #aboutUsDescription {
+        padding-top: 35px;
+        font-size: 18px;
+    }
+
+    .about-item-outer {
+        grid-template-columns: auto;
+        padding: 0 0;
+    }
+
+    .sp-menu-splitter {
+        display: none;
+    }
+
+    .contact-info-outer {
+        display: block;
+    }
+
+    .contact-info-outer .img-outer {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    #contact-info {
+        margin-top: 10px;
+    }
+
+    .service-item-outer h4 {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
+
+    .about-item-outer h4 {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
+
+    .sw-about-item {
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    .serviceSubTitle {
+        font-size: 20px;
+    }
+
+    #serviceMoreInfo {
+        font-size: 1rem;
+        width: 150px;
+        bottom: 15%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .sw-service {
+        margin-top: 3.2%;
+    }
+
+    #aboutUsTitle,
+    #contactUsTitle,
+    .serviceTitle {
+        font-size: 20px;
+        width: 150px;
+    }
+
+    #contactUsTitle {
+        top: -30px;
+    }
+
+    #about-us {
+        min-height: 360px;
+        padding-bottom: 25px;
+    }
+
+    #aboutUsImg {
+        height: 100%;
+        object-fit: cover;
+    }
+
+}
+

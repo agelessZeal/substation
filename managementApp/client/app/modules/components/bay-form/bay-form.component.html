@@ -1,0 +1,99 @@
+<div class="bay-form mg-op-form mg-app-component" *ngIf="isEnabled" id="bay-form">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h4>Bay Details</h4>
+                <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-g">
+                <div class="ui-g-3">
+                    <button type="button" class="btn btn-primary op-btn-save" (click)="onSaveFormData()"
+                            [disabled]="!isFormChanged">{{ (formMode)?'Add':'Save' }}
+                    </button>
+                </div>
+                <div class="ui-g-9">
+                    <button type="button" class="btn btn-success op-btn-details" (click)="onDevicesTable()"
+                            *ngIf="!formMode">Devices
+                    </button>
+                    <button type="button" pButton
+                            class="op-btn-details"
+                            icon="fa {{isReadingICD?'fa-spinner fa-spin':'fa-upload'}}"
+                            (click)="onReadICD()"
+                            label="Read ICD"
+                            *ngIf="!formMode">
+                    </button>
+                    <input type="file" hidden
+                           id="file" accept='text/plain,.icd'
+                           (change)="handleFileInput($event.target.files)">
+                    <button type="button" pButton
+                            icon = "fa fa-download"
+                            class="op-btn-details"
+                            label="Generate PLC"
+                            (click)="onGeneratePLC()"
+                            *ngIf="!formMode">
+                    </button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-content-wrap">
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="mrid">MrID</label>
+                            <input type="text" class="form-control"
+                                   [ngClass]="{'mg-error':(mrID.trim().length == 0)}"
+                                   (ngModelChange)="mrIDChange($event)"
+                                   [ngModel]="mrID" id="mrid">
+                        </div>
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" (ngModelChange)="nameChange($event)"
+                                   [ngClass]="{'mg-error':(mrID.trim().length == 0)}"
+                                   [ngModel]="name" id="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input name="description" class="form-control" (ngModelChange)="descriptionChange($event)"
+                                   [ngModel]="description" id="description">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Location</h5>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="latitude">Latitude</label>
+                            <input type="number" class="form-control" (ngModelChange)="latitudeChange($event)"
+                                   [ngModel]="latitude" id="latitude">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="longitude">Longitude</label>
+                            <input type="number" class="form-control" (ngModelChange)="longitudeChange($event)"
+                                   [ngModel]="longitude" id="longitude">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="altitude">Altitude</label>
+                            <input type="number" class="form-control" (ngModelChange)="altitudeChange($event)"
+                                   [ngModel]="altitude" id="altitude">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>

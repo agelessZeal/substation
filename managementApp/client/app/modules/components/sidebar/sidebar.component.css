@@ -1,0 +1,25 @@
+.mg-sidebar {
+    padding-top: 20px;
+    width: 225px;
+    min-height: calc(100vh - 56px);
+    background-color: #323130;
+}
+
+.mg-sidebar .mg-sidebar-link {
+    display: block;
+    padding: 12px 30px;
+    text-decoration: none;
+    color: white;
+}
+
+.mg-sidebar .mg-sidebar-link:hover {
+    text-decoration: none;
+    background-color: #131212e8;
+}
+
+.mg-sidebar-link i {
+    margin-right: 10px;
+}
+.mg-sidebar-link.active{
+    background-color: #131212e8;
+}

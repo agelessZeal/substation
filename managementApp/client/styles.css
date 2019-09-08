@@ -1,0 +1,277 @@
+/* You can add global styles to this file, and also import other style files */
+body .mg-sidebar .ui-corner-all {
+    border-radius: 0;
+}
+
+.mg-sidebar .ui-menu {
+    width: 100%;
+    background-color: #323130;
+    border: none;
+}
+
+.mg-sidebar .ui-menuitem-link {
+    padding-left: 25px !important;
+}
+
+.mg-sidebar .ui-menuitem-text {
+    color: white !important;
+}
+
+.mg-sidebar .ui-menu .ui-menuitem-icon {
+    color: white !important;
+}
+
+.mg-sidebar .ui-menu .ui-menuitem-link:hover {
+    background-color: #151515
+}
+
+.ui-table-thead th {
+    text-align: center;
+}
+
+.ui-table-thead input {
+    width: 100%;
+}
+.ui-table.ui-widget {
+    margin-top: 15px;
+}
+
+.card-title,
+.card-title h4 {
+    margin: 0;
+}
+.card-title h4 {
+    display: inline-block;
+}
+.card-body .add-item {
+    margin-bottom: 10px;
+    float: left;
+    z-index: 10;
+    margin-left: 5px;
+}
+.card-body .delete-item {
+    margin-bottom: 10px;
+    float: left;
+    z-index: 10;
+    margin-left: 5px;
+}
+.card-body .filter-items{
+    float: left;
+    margin-left: 5px;
+}
+.row-edit-btn {
+    color: #037bfc !important;
+    cursor: pointer;
+}
+
+.mg-error {
+    border: 2px solid red !important;
+}
+
+.content-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: #989898a1;
+    z-index: 10;
+}
+.content-loading img {
+    margin-top: 50px;
+}
+
+
+.page-left-right-icon,
+.page-forward-icon,
+.page-right-left-icon,
+.page-backward-icon {
+    position: fixed;
+    width: 50px;
+    bottom:50px;
+}
+
+.page-left-right-icon {
+    left: 250px;
+}
+
+.page-forward-icon {
+    left: 300px;
+}
+
+.page-right-left-icon {
+    right: 50px;
+}
+
+.page-backward-icon {
+    right: 100px;
+}
+
+.mg-op-form {
+    width: 640px;
+    display: inline-block;
+    /*margin: 0 0 0 20px;*/
+}
+.op-btn-details{
+    float: right;
+    margin-left: 10px !important;
+}
+.op-btn-save {
+    float: left;
+}
+.mg-op-form .form-content-wrap {
+    margin-top: 10px;
+}
+.mg-op-form .form-group {
+    margin-bottom: 0;
+}
+.mg-op-form:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -20px;
+    width: 20px;
+    height: 1px;
+}
+.mg-width-virtual {
+    width: 20px;
+}
+
+.bay-list.card,
+.dev-ms-list.card,
+.device-list.card,
+.mg-op-form .card,
+.partner-substation-list.card
+{
+    margin-left: 20px;
+}
+.bay-form.mg-op-form {
+    width: 840px;
+}
+.card-header .card-title span {
+    float: right;
+    cursor: pointer;
+}
+.card-header .card-title span>i{
+    font-size: 1.5em !important;
+}
+.dev-ms-form .ui-dialog .ui-table.ui-widget,
+.dev-form .ui-dialog .ui-table.ui-widget,
+.substation-form .ui-dialog .ui-table.ui-widget {
+    margin-top: 10px;
+}
+.mg-group-box {
+    position: relative;
+    margin-top: 30px;
+    padding-top: 10px;
+    border: 1px solid #00000047;
+    border-radius: 5px;
+}
+.mg-group-box-title {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    background-color: transparent;
+    top: -15px;
+}
+.mg-group-box-title h5 {
+    display: inline-block;
+    background-color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #000000;
+    padding: 0 10px;
+}
+.mg-group-box .ui-table.ui-widget {
+    margin-top: 10px;
+}
+.mg-show-popup-tbl {
+    float: right;
+}
+.mg-hide {
+    display: none !important;
+}
+#bay-form .ui-button.ui-button-text-icon-left .ui-button-text {
+    padding: 0.375em 1em 0.375em 2em;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+body .ui-table .ui-table-tbody > tr > td {
+    word-break: break-all;
+}
+
+.mg-dropdown-area {
+    display: inline-block;
+    float: left;
+    /*margin-left: 5px;*/
+}
+.mg-dropdown-menu {
+    display: block !important;
+    padding: 10px !important;
+}
+
+.drop-down-backdrop {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+
+p-tristatecheckbox {
+    display: block;
+}
+.mg-check-box-list {
+    display: inline-block;
+    min-width: 150px;
+}
+
+.mg-dropdown-menu table th:nth-child(1),
+.mg-dropdown-menu table th:nth-child(2),
+.mg-dropdown-menu table th:nth-child(3),
+.mg-dropdown-menu table td:nth-child(1),
+.mg-dropdown-menu table td:nth-child(2),
+.mg-dropdown-menu table td:nth-child(3) {
+    padding: 3px 10px;
+    vertical-align: middle;
+}
+
+.mg-dropdown-menu table th:nth-child(1),
+.mg-dropdown-menu table td:nth-child(1){
+    text-align: center;
+}
+
+p-table table tbody>tr{
+    cursor: pointer;
+}
+.mg-toggle-btn:after {
+    display: none !important;
+}
+
+.card-body {
+    padding: 20px !important;
+}
+.mg-item-checkbox {
+    width: 45px;
+}
+
+.ui-table-resizable .ui-table-tfoot>tr>td,
+.ui-table-resizable .ui-table-tbody>tr>td {
+     overflow: unset!important;
+     overflow-x: inherit !important;
+}
+.ui-table-resizable>.ui-table-wrapper {
+    overflow-x: unset !important;
+}
+
+.ui-table-wrapper {
+    overflow-x: auto !important;
+}
+.custom-modal-body .ui-table-wrapper table{
+    width: 1710px;
+}
+.table-setting-bar{
+    padding-top: 6px;
+}

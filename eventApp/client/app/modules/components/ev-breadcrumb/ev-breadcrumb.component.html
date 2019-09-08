@@ -1,0 +1,36 @@
+<div id="ev-breadcrumb">
+    <app-page-loading *ngIf="!contentLoaded"></app-page-loading>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="form-group">
+                <label for="ev-substation">Substations</label>
+                <select class="form-control" [(ngModel)]="selectedSub" id="ev-substation"
+                        (ngModelChange)="onSelectSubstation($event)">
+                    <option *ngFor="let sub of substations" [value]="sub">{{sub}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="form-group">
+                <label for="ev-bay">Bays</label>
+                <select class="form-control"
+                        [(ngModel)]="selectedBay" id="ev-bay"
+                        [disabled]="selectedSub == 'All'"
+                        (ngModelChange)="onSelectBay($event)">
+                    <option *ngFor="let bay of bays" [value]="bay">{{bay}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <div class="form-group">
+                <label for="ev-dev">Devices</label>
+                <select class="form-control" id="ev-dev"
+                        [(ngModel)]="selectedDevice"
+                        [disabled]="selectedSub == 'All' || selectedBay == 'All'"
+                        (ngModelChange)="onSelectDevice($event)">
+                    <option *ngFor="let device of devices" [value]="device">{{device}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

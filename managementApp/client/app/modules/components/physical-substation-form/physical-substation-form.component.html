@@ -1,0 +1,67 @@
+<div class="physical-substation-form" id="{{tableId}}">
+    <p-dialog header="Physical Substations"
+              width="1068"
+              [(visible)]="displayModal"
+              (onShow)="onShowDialog()"
+              (onHide)="onDiscard()"
+              [modal]="true">
+        <div class="table-setting-bar">
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    <button class="btn filter-items" (click)="isHideFilter = !isHideFilter"
+                            pTooltip="{{ (isHideFilter)?'On Filter':'Off Filter' }}" tooltipPosition="top"
+                            [ngClass]="{'btn-primary':!isHideFilter, 'btn-secondary':isHideFilter}">
+                        <i class="fa fa-filter"></i>
+                    </button>
+                </div>
+                <div class="ui-g-3 text-right">
+                    <label>Role</label>
+                </div>
+                <div class="ui-g-3">
+                    <select class="form-control" [(ngModel)]="selectedRole">
+                        <option *ngFor="let vrole of vRoles" [value]="vrole.value"
+                                [selected]="(selectedRole && vrole.value == selectedRole)">{{vrole.value}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <p-table #dt sortMode="multiple"
+                 [value]="substations"
+                 [totalRecords]="substations.length"
+                 [paginator]="true" [rows]="5"
+                 [(selection)]="selectedRow"
+                 selectionMode="single">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="th-id-wrap"
+                        *ngFor="let subcol of subCols"
+                        [pSortableColumn]=" (subcol.group != '')? subcol.group + '.' + subcol.field: subcol.field">
+                        {{subcol.header}}
+                        <p-sortIcon [field]="subcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr [ngClass]="{'mg-hide':isHideFilter}">
+                    <th *ngFor="let subcol of subCols"
+                        [ngSwitch]="subcol.field">
+                        <input *ngSwitchCase="subcol.field" pInputText type="text"
+                               (input)="onTblFilter($event, subcol, dt)">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-partner>
+                <tr [pSelectableRow]="partner">
+                    <td *ngFor="let subcol of subCols">
+                        {{ (subcol.group != '') ? partner[subcol.group][subcol.field] : partner[subcol.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="fa fa-close" (click)="onDiscard()" label="Discard"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="onAddRow()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>

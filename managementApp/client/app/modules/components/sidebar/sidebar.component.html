@@ -1,0 +1,5 @@
+<div class="mg-sidebar">
+  <a class="mg-sidebar-link" *ngFor="let menuitem of items" [ngClass]="{'active':(menuitem.routerLink == router.url)}" routerLink="{{menuitem.routerLink}}">
+  <i class="{{menuitem.icon}}"></i>  {{menuitem.label}}
+  </a>
+</div>

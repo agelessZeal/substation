@@ -1,0 +1,21 @@
+.map {
+    height: 100%;
+    width: 100%;
+}
+.layer-control-wrapper {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 900;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ff000063;
+}
+.layer-control-wrapper p-checkbox {
+    display: block;
+}
+.sub-ms-list,
+.sub-mr-list {
+    padding-left: 20px;
+}

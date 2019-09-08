@@ -1,0 +1,172 @@
+<div class="measurement-form mg-op-form mg-app-component" *ngIf="isEnabled" id="measurement-form">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h4>Measurement Details</h4>
+                <span (click)="onCloseComponent()"><i class="fa fa-2x fa-close"></i></span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    <button type="button" class="btn btn-primary op-btn-save" (click)="onSaveFormData()"
+                            [disabled]="!isFormChanged">{{ (formMode)?'Add':'Save' }}
+                    </button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-content-wrap">
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="msid">ID</label>
+                            <input type="text" class="form-control"
+                                   [ngClass]="{'mg-error':(id.trim().length == 0)}"
+                                   (ngModelChange)="idChange($event)"
+                                   [ngModel]="id" id="msid">
+                        </div>
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control"
+                                   [ngClass]="{'mg-error':(name.trim().length == 0)}"
+                                   (ngModelChange)="nameChange($event)"
+                                   [ngModel]="name" id="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="unit">Unit</label>
+                            <input type="text" class="form-control"
+                                   [ngClass]="{'mg-error':(unit.trim().length == 0)}"
+                                   (ngModelChange)="unitChange($event)"
+                                   [ngModel]="unit" id="unit">
+                        </div>
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <label for="multiplier">Multiplier</label>
+                            <input type="text" class="form-control"
+                                   [ngClass]="{'mg-error':(multiplier.trim().length == 0)}"
+                                   (ngModelChange)="multiplierChange($event)"
+                                   [ngModel]="multiplier" id="multiplier">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input name="description" class="form-control"
+                                   (ngModelChange)="descriptionChange($event)"
+                                   [ngModel]="description" id="description">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="format">Format</label>
+                            <input name="description" class="form-control"
+                            (ngModelChange)="formatChange($event)"
+                            [ngModel]="format" id="format">
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="aggregation">Aggregation</label>
+                            <select name="flags" id="aggregation" class="form-control"
+                                    (ngModelChange)="aggregationChange($event)"
+                                    [(ngModel)]="aggregation">
+                                <option *ngFor="let agge of aggregationList" value="{{ agge.value }}">{{agge.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ui-g-4">
+                        <div class="form-group">
+                            <label for="flags">Enumeration Flags</label>
+                            <select name="flags" id="flags" class="form-control"
+                                    (ngModelChange)="onChangeEnumFlags($event)"
+                                    [disabled]="!isEnabledEnum"
+                                    [(ngModel)]="enumFlag">
+                                <option value="true" [selected]="enumFlag">True</option>
+                                <option value="false" [selected]="!enumFlag">False</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-6">
+                        <div class="form-group">
+                            <p-checkbox [(ngModel)]="isEnabledEnum"
+                                        (ngModelChange)="onOffEnumValues($event)"
+                                        binary="true" label="Enumeration Mode"></p-checkbox>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ui-g mg-group-box">
+                    <div class="mg-group-box-title">
+                        <h5 class="">Enumeration</h5>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p-table #dt sortMode="multiple"
+                                     [value]="enumList"
+                                     [paginator]="true" [rows]="5"
+                                     [totalRecords]="enumList.length"
+                                     selectionMode="single"
+                                     (onRowSelect)="onEnumRowSelect($event)"
+                                     (onRowUnselect)="onEnumRowUnSelect($event)"
+                                     [(selection)]="curSelEnum">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th *ngFor="let enumcol of enumCols" [pSortableColumn]="enumcol.field">
+                                            {{enumcol.header}}
+                                            <p-sortIcon [field]="enumcol.field" ariaLabel="Activate to sort"></p-sortIcon>
+                                        </th>
+                                        <th style="width:4em"></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-i="rowIndex" let-enum>
+                                    <tr [pSelectableRow]="enum">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{enum}}</td>
+                                        <td>
+                                            <button pButton type="button"
+                                                    [disabled]="!isEnabledEnum"
+                                                    icon="pi pi-times"
+                                                    class="ui-button-danger"
+                                                    (click)="onDeleteEnum(enum)"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="summary">
+                                    <div class="ui-g">
+                                        <div class="ui-g-6">
+                                            <input pInputText
+                                                   [disabled]="!isEnabledEnum"
+                                                   placeholder="New Enum Data"
+                                                   [(ngModel)]="enumValue">
+                                        </div>
+                                        <div class="ui-g-6">
+                                            <button pButton type="button"
+                                                    [disabled]="enumValue.length == 0"
+                                                    icon="pi pi-plus"
+                                                    label="{{ (curSelEnum.length>0)?'Save':'Add' }}"
+                                                    (click)="onAddNewEnum()"></button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Warning!" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>
