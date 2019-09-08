@@ -1,0 +1,38 @@
+{
+  "Home": {
+    "title": "Casa",
+    "login": "Iniciar sesión",
+    "All": "Todas",
+    "PhysicalSubstations": "Subestaciones físicas",
+    "VirtualSubstations": "Subestaciones virtuales"
+  },
+  "Explorer": {
+    "title": "Exploradora",
+    "Historical Measurement": "Medida historica",
+    "Metering": "Medida",
+    "Actual Measurement": "Medida real",
+    "fromdt": "Partir de la fecha",
+    "startdt": "Fecha de inicio",
+    "todt": "Hasta la fecha",
+    "enddt": "Fecha final",
+    "logout": "Cerrar sesión",
+    "mstypes": "Tipos de medidas",
+    "meteringtyps": "Tipos de medidores",
+    "linechart": "Gráfico de linea",
+    "barchart": "Gráfico de barras",
+    "timespan": "Espacio de tiempo",
+    "refreshtime":"Período",
+    "day": "Día",
+    "hour": "Hora",
+    "minute": "Minuto",
+    "second": "Segunda",
+    "set": "CONJUNTO",
+    "totaltime": "Tiempo total",
+    "id": "ID",
+    "name": "Nombre",
+    "unit": "Unidad",
+    "multiplier": "Multiplicadora",
+    "description": "Descripción",
+    "format": "Formato"
+  }
+}

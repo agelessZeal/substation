@@ -1,0 +1,186 @@
+<div class="chart-view-wrapper">
+    <div class="series-types">
+        <button class="btn btn-outline-primary tree-toggle-btn" (click)="onTreeToggle()">
+            <i class="fa" [ngClass]="{'fa-angle-double-right': isTreeShowed, 'fa-angle-double-left': !isTreeShowed}" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-primary series-types-btn" *ngFor="let seriesType of seriesTypes"
+                [ngClass]="{'selected': (seriesType == curSeriesType)}" (click)="onSelectSeries(seriesType)">
+            {{ 'Explorer.'+ seriesType | translate}}
+        </button>
+        <div class="ms-metering-type">
+            <div class="form-group my-inline-form-group" *ngIf="curSeriesType !== 'Metering'" id="measurement-types">
+                <select class="form-control my-inline-form-control" name="ms-type" id="ms-type"
+                        (change)="onSelectMSType($event.target.value)">
+                    <option *ngFor="let msitem of msTypes" [value]="msitem.id" [selected]="curMSType.id == msitem.id">
+                        {{msitem.name}}
+                    </option>
+                </select>
+                <div class="ms-tooltip">
+                    <span>{{ 'Explorer.id' | translate }} : {{curMSType?.id}}</span>
+                    <span>{{ 'Explorer.name' | translate }} : {{curMSType?.name}}</span>
+                    <span>{{ 'Explorer.unit' | translate }} : {{curMSType?.unit}}</span>
+                    <span>{{ 'Explorer.multiplier' | translate }} : {{curMSType?.multiplier}}</span>
+                    <span>{{ 'Explorer.description' | translate }} : {{curMSType?.description}}</span>
+                    <span>{{ 'Explorer.format' | translate }} : {{curMSType?.format}}</span>
+                </div>
+            </div>
+            <div class="form-group my-inline-form-group" *ngIf="curSeriesType == 'Metering'" id="metering-types">
+                <select class="form-control my-inline-form-control" name="metering-type" id="metering-type"
+                        (change)="onSelectMetering($event.target.value)">
+                    <option *ngFor="let metering of meterings" [value]="metering.id"  [selected]="curMeteringType.id == metering.id">
+                        {{metering.name}}
+                    </option>
+                </select>
+                <div class="ms-tooltip">
+                    <span>{{ 'Explorer.id' | translate }} : {{curMeteringType?.id}}</span>
+                    <span>{{ 'Explorer.name' | translate }} : {{curMeteringType?.name}}</span>
+                    <span>{{ 'Explorer.unit' | translate }} : {{curMeteringType?.unit}}</span>
+                    <span>{{ 'Explorer.multiplier' | translate }} : {{curMeteringType?.multiplier}}</span>
+                    <span>{{ 'Explorer.description' | translate }} : {{curMeteringType?.description}}</span>
+                    <span>{{ 'Explorer.format' | translate }} : {{curMeteringType?.format}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-12" *ngIf="curSeriesType == 'Metering'">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group" style="display: none">
+                        <label for="numberOf">Number Of <span class="red">*</span> : </label>
+                        <div class="input-group mb-3">
+                            <input class="form-control" id="numberOf"
+                                   [(ngModel)]="numberOf" (ngModelChange)="onChangeNumberOf($event)"
+                                   name="numberOf" type="number" step="1">
+                            <div class="input-group-append" (click)="onSelectNumberOf()" id="numberOf-set-btn">
+                                <span class="input-group-text">{{ 'Explorer.set' | translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="date-range-wrapper">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="start-from-date">
+                    <div class="form-group my-inline-form-group" *ngIf="curSeriesType == 'Metering'">
+                        <label for="ms-type" class="my-inline-form-label">{{ 'Explorer.startdt' | translate }} </label>
+                        <input placeholder="Date Time:" class="form-control my-inline-form-control"
+                               [(ngModel)]="startDate" (ngModelChange)="onChangeStartDate($event)"
+                               [owlDateTimeTrigger]="startdt" [owlDateTime]="startdt">
+                        <owl-date-time #startdt></owl-date-time>
+                    </div>
+                    <div class="form-group my-inline-form-group" *ngIf="curSeriesType == 'Historical Measurement'">
+                        <label for="ms-type" class="my-inline-form-label">{{ 'Explorer.fromdt' | translate }}&nbsp;</label>
+                        <input placeholder="Date Time:" class="form-control my-inline-form-control"
+                               [(ngModel)]="fromDate" (ngModelChange)="onChangeFromDate($event)"
+                               [owlDateTimeTrigger]="fromdt" [owlDateTime]="fromdt">
+                        <owl-date-time #fromdt></owl-date-time>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group my-time-span-group"
+                     [ngClass]="{'invalid-form-elem ':!isTimeSpanValid}" *ngIf="curSeriesType == 'Metering'">
+                    <label for="timespan" class="my-inline-form-label">{{ 'Explorer.timespan' | translate }}&nbsp;</label>
+                    <input type="number" class="form-control" name="timespan" [min]="1" step="1"
+                           id="timespan" [(ngModel)]="tsValue">
+                    <select class="form-control" data-live-search="true"
+                            (change)="onSelectTimeSpanPrecision($event.target.value)">
+                        <option *ngFor="let timeprec of timePrecList"
+                                [selected]="timeprec == curPrecision"
+                                value="{{timeprec}}">
+                            {{ 'Explorer.'+timeprec | translate }}
+                        </option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary"
+                                type="button"  (click)="onSelectTimeSpan()">{{ 'Explorer.set' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="end-to-date">
+                    <div class="form-group my-inline-form-group" *ngIf="curSeriesType == 'Metering'">
+                        <label for="ms-type" class="my-inline-form-label">{{ 'Explorer.enddt' | translate }}&nbsp;</label>
+                        <input placeholder="Date Time:" class="form-control my-inline-form-control"
+                               [(ngModel)]="endDate" (ngModelChange)="onChangeEndDate($event)"
+                               [owlDateTimeTrigger]="enddt" [owlDateTime]="enddt">
+                        <owl-date-time #enddt></owl-date-time>
+                    </div>
+                    <div class="form-group my-inline-form-group" *ngIf="curSeriesType == 'Historical Measurement'">
+                        <label for="ms-type">{{ 'Explorer.todt' | translate }}&nbsp;</label>
+                        <input placeholder="Date Time:" class="form-control my-inline-form-control"
+                               [(ngModel)]="toDate" (ngModelChange)="onChangeToDate($event)"
+                               [owlDateTimeTrigger]="todt" [owlDateTime]="todt">
+                        <owl-date-time #todt></owl-date-time>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group my-refresh-time-span-group"  *ngIf="curSeriesType == 'Actual Measurement'">
+                <label for="timespan" class="my-inline-form-label">{{ 'Explorer.refreshtime' | translate }}&nbsp;</label>
+                <input type="number" class="form-control" name="refresh" id="refreshtime" [(ngModel)]="tsPeriodValue">
+                <select class="form-control" data-live-search="true"  [(ngModel)]="curPeriodPrecision"
+                        (change)="onSelectPeriodPrecision($event.target.value)">
+                    <option value="day" [selected]="curPeriodPrecision=='day'">{{ 'Explorer.day' | translate }}</option>
+                    <option value="hour" [selected]="curPeriodPrecision=='hour'">{{ 'Explorer.hour' | translate }}</option>
+                    <option value="minute" [selected]="curPeriodPrecision=='minute'">{{ 'Explorer.minute' | translate }}</option>
+                    <option value="second" [selected]="curPeriodPrecision=='second'">{{ 'Explorer.second' | translate }}</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                            (click)="onSetPeriodTime()">{{ 'Explorer.set' | translate }}</button>
+                </div>
+            </div>
+        </div>
+        <div class="offset-md-4 col-md-4">
+            <div class="input-group my-refresh-time-span-group"  *ngIf="curSeriesType == 'Actual Measurement'">
+                <label for="totaltime" class="my-inline-form-label">{{ 'Explorer.totaltime' | translate }}&nbsp;</label>
+                <input type="number" class="form-control" name="totaltime" id="totaltime" [(ngModel)]="tsTotalTimeValue">
+                <select class="form-control" data-live-search="true"  [(ngModel)]="curTotalTimePrecision"
+                        (change)="onSelectTotalTimePrecision($event.target.value)">
+                    <option value="day" [selected]="curTotalTimePrecision=='day'">{{ 'Explorer.day' | translate }}</option>
+                    <option value="hour" [selected]="curTotalTimePrecision=='hour'">{{ 'Explorer.hour' | translate }}</option>
+                    <option value="minute" [selected]="curTotalTimePrecision=='minute'">{{ 'Explorer.minute' | translate }}</option>
+                    <option value="second" [selected]="curTotalTimePrecision=='second'">{{ 'Explorer.second' | translate }}</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                            (click)="onSetTotalTime()">{{ 'Explorer.set' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-area">
+        <div class="form-group my-inline-form-group">
+            <ng-select [items]="chartTypes"
+                       *ngIf="!(curMSType && curMSType.enumeration && curMSType.enumeration.flags)"
+                       bindLabel="name"
+                       bindValue="name"
+                       placeholder="Select Chart"
+                       [(ngModel)]="selectedChartType"
+                       (ngModelChange)="onChangeChartType($event)">
+                <ng-template ng-label-tmp let-item="item">
+                    <img height="15" width="15" [src]="item.thumbnail"/>
+                    <b> {{ 'Explorer.'+item.lang | translate}}</b>
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                    <img height="15" width="15" [src]="item.thumbnail"/>
+                    <b> {{ 'Explorer.'+item.lang | translate}}</b>
+                </ng-template>
+            </ng-select>
+        </div>
+        <div class="data-load-waiting" *ngIf="!chatDataLoaded">
+            <div class="loader" *ngIf="httpErrorMsg.length == 0"></div>
+            <div class="data-error-msg" *ngIf="httpErrorMsg.length != 0">{{httpErrorMsg}}</div>
+        </div>
+        <div class="smart_dev_chart" [chart]="chart"></div>
+        <ngx-json-viewer [json]="jsonData" *ngIf="false"></ngx-json-viewer>
+    </div>
+</div>

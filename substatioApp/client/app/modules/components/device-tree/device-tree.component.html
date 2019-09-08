@@ -1,0 +1,12 @@
+<div class="sb-dev-tree" [ngClass]="{'toggle': !isTreeShowed}">
+    <div class="device-tree-wrapper">
+        <tree *ngIf="tree"
+              [tree]="tree"
+              [settings]="{rootIsVisible: false}"
+              (nodeSelected)="onDevItemClick($event)" #treeComponent>
+        </tree>
+        <div class="tree-waiting" *ngIf="!devTreeLoaded">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>

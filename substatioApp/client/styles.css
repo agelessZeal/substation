@@ -1,0 +1,309 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/* You can add global styles to this file, and also import other style files */
+/**
+::ng2 Treeview custom style
+*/
+
+html  {
+    font-family: Roboto Condensed !important;
+}
+
+body {
+    font-family: Roboto Condensed !important;
+}
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary {
+    background-color: #606060 !important;
+}
+.smart_dev_chart * {
+    font-family: Roboto Condensed;
+}
+
+tree-internal .tree {
+    box-sizing: border-box;
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    font-family: Roboto Condensed !important;
+}
+
+.tree .node-value {
+    margin-left: 5px;
+}
+
+.node-name {
+    margin-left: 5px;
+}
+
+.tree .folding {
+    font-weight: normal !important;
+}
+
+tree > tree-internal > ul > li > div {
+    /*display: none !important;*/
+}
+
+.required:after {
+    content: " *";
+}
+
+.red {
+    color: red
+}
+
+tree-internal .tree .node-value.node-selected {
+    background-color: #6589f391;
+}
+
+tree > tree-internal > ul:first-child {
+    padding-left: 10px;
+}
+
+.ng-select .ng-clear-wrapper {
+    display: none !important;
+}
+
+.sb-page-loading {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    background-color: #ffffff;
+    transition: background-color 3s linear;
+    display: flex;
+    justify-content: center;
+}
+
+.ngx-json-viewer {
+    overflow-y: auto !important;
+}
+
+.sb-page-loading .loader {
+    margin: 42vh auto;
+}
+
+.loader {
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 9px solid rgba(37, 37, 37, 0.2);
+    border-right: 9px solid rgba(37, 37, 37, 0.2);
+    border-bottom: 9px solid rgba(37, 37, 37, 0.2);
+    border-left: 9px solid #252525;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+
+.loader, .loader:after {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.raphael-group-21-creditgroup,
+.raphael-group-8-creditgroup {
+    display: none !important;
+}
+
+.chart-area {
+    border: 1px solid #77757a !important;
+}
+
+.highcharts-container {
+    height: 100% !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+    border-radius: 0;
+}
+
+.highcharts-legend {
+    display: none !important;
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/***
+=============================
+ */
+/* Tooltip container */
+.ctip {
+    position: relative;
+    display: inline-block;
+    /*border-bottom: 1px dotted black; !* If you want dots under the hoverable text *!*/
+}
+
+/* Tooltip text */
+
+.ctip .ttext {
+    visibility: hidden;
+    background-color: #000000;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 14px;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 20%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.ctip .ttext-top {
+    z-index: 1;
+    bottom: inherit;
+    top: 120%;
+}
+
+.ctip.sub .ttext {
+    width: 180px;
+    left: 0;
+}
+
+.ctip.dev .ttext {
+    width: 180px;
+    left: 0;
+}
+
+.ctip.bay .ttext {
+    width: 180px;
+    left: 0;
+}
+
+/* Tooltip arrow */
+.ctip .ttext::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+/* Tooltip arrow */
+.ctip .ttext-top::after {
+    content: " ";
+    top: -2%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-width: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid black;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.ctip:hover .ttext {
+    visibility: visible;
+    opacity: 1;
+    text-align: left;
+    padding: 10px;
+}
+
+.ttext hr {
+    margin-bottom: 2px;
+    margin-top: 2px;
+    border-top: 1px solid white;
+}
+
+.tipitem {
+    display: block;
+    white-space: nowrap;
+}
+
+.tipitem.role {
+    font-weight: bold;
+    color: #fb6409;
+}
+
+.tipsep {
+    display: block;
+}
+
+.ctip.bay .tipitem {
+    white-space: normal;
+}
+
+.ctip.dev .tipitem {
+    white-space: normal;
+}
+
+.data-error-msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: red;
+}
+.sb-enum-icon-img {
+    vertical-align: middle;
+    width: 32px;
+    height: 32px
+}

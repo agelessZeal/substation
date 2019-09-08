@@ -1,0 +1,25 @@
+.sb-main-explorer {
+    display: flex;
+    align-items: stretch;
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+}
+
+.sb-dev-tree {
+    position: relative;
+    min-width: 360px;
+    max-width: 360px;
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.sb-dev-chart {
+    width: calc(100vw - 390px);
+    height: 100%;
+    min-height: 90vh;
+    border: 1px solid #77757a;
+}
+.sb-dev-chart.toggle {
+    width: calc(100vw);
+}

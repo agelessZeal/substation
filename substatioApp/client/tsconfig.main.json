@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "resolveJsonModule": true, // Import Json file ,https://www.reddit.com/r/Angular2/comments/9phvw1/pro_tip_with_angular_7_you_can_import_json_files/
+    "esModuleInterop": true, // Import Json file
+    "allowSyntheticDefaultImports": true, // Import Json file
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}

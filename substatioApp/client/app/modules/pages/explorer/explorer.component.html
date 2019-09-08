@@ -1,0 +1,7 @@
+<div class="sb-main-explorer">
+  <app-device-tree [accToken]="accessToken" *ngIf="(accessToken!='')"></app-device-tree>
+  <div class="sb-dev-chart" [ngClass]="{'toggle': !isTreeShowed}">
+    <app-chart-view [accToken]="accessToken" *ngIf="(accessToken!='')"></app-chart-view>
+  </div>
+</div>
+

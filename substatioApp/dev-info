@@ -1,0 +1,64 @@
+We need chart modes:
+line
+scatter
+area
+bar
+Show values (and timestamps) when hovering mouse over/near a chart value/bar.
+------------------
+Based on https://www.fusioncharts.com/dev/chart-attributes/... charts:
+"/spline" (single series spline) is nice enough
+feature of "/dragline" is very needed: hovering mouse anywhere in the chart selects nearest data point, not needed to position a little blob on the chart to show its details
+simple "/bar2d" would be ok but with vertical bars, not horizontal
+So. a line and a bar chart will be enough for this milestone, but code and GUI structure must be prepared to allow more charts in the future.
+Multi-series charts are not needed in this milestone, single-valued are enough.
+
+https://www.fusioncharts.com/dev/chart-attributes/spline
+https://www.fusioncharts.com/dev/chart-attributes/dragline
+https://www.fusioncharts.com/dev/chart-attributes/bar2d
+
+====================================================================================================================
+https://stackoverflow.com/questions/51111329/angular-6-cli-localisation-internationalization-for-multilingual-support
+https://www.npmjs.com/package/@ngx-translate/http-loader
+https://github.com/ngx-translate/core
+https://www.npmjs.com/package/@ngx-translate/core
+https://github.com/ngx-translate/example
+https://gitlab.com/DenysVuika/medium-i18n/tree/master/src/assets/i18n
+===============================================
+https://github.com/ngx-translate/core/issues/495
+English
+Russian
+French
+Chinese
+Spanish
+Polish
+Deutsch
+Turkish
+
+===========================
+to be changed:
+(green is ready and accepted, red is important missing feature, black is new or unchecked)
+        metering 'timespan' parameter should be in the same row as start/end, centered
+            timespan: 1 numeric input and 1 "unit" combobox containing "day(s)","hour(s)","minute(s)", "second(s)"
+        metering numberof parameter should not be used, no control is needed
+    datetime formats: in chart some 'short-format' will be suffice, but in tooltip, "long-format" is needed
+    highlighted value contains date and value but unit is also needed (2019.02......., 945 kW)
+    chart X/Y axis: adaptive steps needed to be defined to avoid too dense axis labels
+    vertical guideline: at mouse X a line should be seen, and nearest data point's value should be shown (value and date) in/below chart
+    subjects (substation, bay, device, measurement, metering) should describe themselves: tooltip in treeview, tooltip in combos, etc
+
+
+
+https://stackoverflow.com/questions/43667961/highcharts-show-datetime-format-on-xaxis
+
+lo. I created a project in Azure devops, added you as member, please try https://dev.azure.com/smartservice-energy/Substation%20Application
+
+1549965729
+1549965735
+
+{
+ "authority":"https://login.microsoftonline.com/common/",
+ "clientId":"abe2a66f-24fd-48db-8951-ad9cf48ea0e2",
+ "scopes":"openid profile User.Read email",
+ "userIdentifier":"NGEzZTQ3ODUtN2QyYS00Y2RkLTg1NDMtMzExNjFhNDVmNTI2.ZjNiMjhmMjYtNmQxMC00NTIyLWFiMjYtMzE0MTUxNmNiYjFh"
+}
+http://localhost:8081/#access_token=eyJ0eXAiOiJKV1QiLCJub25jZSI6IkFRQUJBQUFBQUFDRWZleFh4amFtUWIzT2VHUTRHdWd2Y0hsdlZ2bWxySkhIV084OTNFNkg2QkpZaGhsMW9HSXBzeFlyS2w3YWNxVzVNaWNfS2owM3dRR192bHQ0Tmx0ZkQ1M3VjQ3BqMGhzUnotaW1rS094cXlBQSIsImFsZyI6IlJTMjU2IiwieDV0IjoiLXN4TUpNTENJRFdNVFB2WnlKNnR4LUNEeHcwIiwia2lkIjoiLXN4TUpNTENJRFdNVFB2WnlKNnR4LUNEeHcwIn0.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mM2IyOGYyNi02ZDEwLTQ1MjItYWIyNi0zMTQxNTE2Y2JiMWEvIiwiaWF0IjoxNTQ5OTY2NjY0LCJuYmYiOjE1NDk5NjY2NjQsImV4cCI6MTU0OTk3MDU2NCwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IjQySmdZR2hiM2k1MCtsSjYzZnJ6VzNkeG14OFVqV290WDhWOUxyUmhlNVBYT29QdnQvTUEiLCJhbXIiOlsicHdkIl0sImFwcF9kaXNwbGF5bmFtZSI6InN1YnN0YXRpb25BcHAyLjAiLCJhcHBpZCI6ImFiZTJhNjZmLTI0ZmQtNDhkYi04OTUxLWFkOWNmNDhlYTBlMiIsImFwcGlkYWNyIjoiMCIsImlwYWRkciI6IjE5OC4yLjIyOC4yMCIsIm5hbWUiOiJTdWJTdGF0aW9uIiwib2lkIjoiNmQ1ZGJkNzUtNmEzOC00YmNmLTliZWUtZWI2ZDMxZjM3OGRhIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAwM0EzMkE0NEQiLCJzY3AiOiJvcGVuaWQgcHJvZmlsZSBVc2VyLlJlYWQgZW1haWwiLCJzdWIiOiJBcTBzSlRWYS16R0RXaG13UGdrbnV0VWlDdm1kSV9oalZzbzlCMURCdC1rIiwidGlkIjoiZjNiMjhmMjYtNmQxMC00NTIyLWFiMjYtMzE0MTUxNmNiYjFhIiwidW5pcXVlX25hbWUiOiJzdWJzdGF0aW9uQHZla3Rvci5jby5odSIsInVwbiI6InN1YnN0YXRpb25AdmVrdG9yLmNvLmh1IiwidXRpIjoiczhMMk1hUndUa21mbDUxdHVUYUdBQSIsInZlciI6IjEuMCIsInhtc19zdCI6eyJzdWIiOiJuYXZxdlcyWmF6eGw4UnpobEF6WnRhMGFjQkY0YkxnTXN2SGlnUGpzWDVjIn0sInhtc190Y2R0IjoxNTIyMzI0MDA4fQ.d_096LryMlGK7_WUGO6RipGAhAemGdFs4k5o_6rJ7Y8Ze7VB4q8Fc-RUqVPDLGazijKBfnGfgT71s1GQencVZXpSgLmN9AAsz4OeBEBf0CpHm0tHbOSAO9h_BeLZ34Tzi_W4tXIb-ZEJmnXl_Vy9yVwbHesIarCMHxQqSK-1dEojp5iXfn45AYsEY4U78UYoRyDzs7nlZEa4pxEza7SYDH4voIvk5g64TR0FW1SY5bed2_LbPEuiNhCLRkFt7xYkiZRYAJzUmw9YI9jOxL_RqkT1S8_DGgRz0fkdI3HrpB7rBUIExSqVQrSARPseNNLCmCaAnG8XyBX1-J1oYS5h8A&token_type=Bearer&expires_in=3599&scope=openid+profile+User.Read+email&client_info=eyJ1aWQiOiI2ZDVkYmQ3NS02YTM4LTRiY2YtOWJlZS1lYjZkMzFmMzc4ZGEiLCJ1dGlkIjoiZjNiMjhmMjYtNmQxMC00NTIyLWFiMjYtMzE0MTUxNmNiYjFhIn0&state=fc1fa5ea-d230-449a-adb0-092554a448f7&session_state=d452c9ab-3fa3-448d-9747-855dd8f2f84f

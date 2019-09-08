@@ -1,0 +1,38 @@
+{
+  "Home": {
+    "title": "主页",
+    "login": "登录",
+    "All": "全都",
+    "PhysicalSubstations": "物理变电站",
+    "VirtualSubstations": "虚拟变电站"
+  },
+  "Explorer": {
+    "title": "探险者",
+    "Historical Measurement": "历史",
+    "Metering": "测光",
+    "Actual Measurement": "实际",
+    "fromdt": "从日期",
+    "startdt": "开始日期",
+    "todt": "至日期",
+    "enddt": "结束日期",
+    "logout": "登出",
+    "mstypes": "测量类型",
+    "meteringtyps": "计量类型",
+    "linechart": "折线图",
+    "barchart": "条形图",
+    "timespan": "时间跨度",
+    "refreshtime":"期",
+    "day": "天",
+    "hour": "小时",
+    "minute": "分钟",
+    "second": "秒钟",
+    "set": "决定",
+    "totaltime": "总时间",
+    "id": "ID",
+    "name": "名称",
+    "unit": "单元",
+    "multiplier": "乘数",
+    "description": "描述",
+    "format": "格式"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "Home": {
+    "title": "Home",
+    "login": "Login",
+    "All": "All",
+    "PhysicalSubstations": "Physical Substations",
+    "VirtualSubstations":"Virtual Substations"
+  },
+  "Explorer": {
+    "title": "Explorer",
+    "Historical Measurement": "Historical Measurement",
+    "Metering": "Metering",
+    "Actual Measurement": "Actual Measurement",
+    "fromdt": "From Date",
+    "startdt": "Start Date",
+    "todt": "To Date",
+    "enddt": "End Date",
+    "logout": "Logout",
+    "mstypes": "Measurement Types",
+    "meteringtyps": "Metering Types",
+    "linechart": "Line Chart",
+    "barchart": "Bar Chart",
+    "timespan": "Time Span",
+    "refreshtime":"Period",
+    "day": "Day",
+    "hour": "Hour",
+    "minute": "Minute",
+    "second": "Second",
+    "set": "SET",
+    "totaltime": "Total Time",
+    "id": "ID",
+    "name": "Name",
+    "unit": "Unit",
+    "multiplier": "Multiplier",
+    "description": "Description",
+    "format": "Format"
+  }
+}
